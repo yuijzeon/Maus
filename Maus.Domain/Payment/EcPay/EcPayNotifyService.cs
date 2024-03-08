@@ -2,9 +2,9 @@
 
 namespace Maus.Domain.Payment.EcPay;
 
-class EcPayProxy : IEcPayProxy
+public class EcPayNotifyService : IEcPayNotifyService
 {
-    public Task<object> CreateAioCheckOut(EcPayAioCheckOutRequest ecPayAioCheckOutRequest)
+    public Task<object> PayInNotify(EcPayPayInCallback request)
     {
         throw new NotImplementedException();
     }

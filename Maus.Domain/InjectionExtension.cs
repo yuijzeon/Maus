@@ -10,8 +10,9 @@ public static class InjectionExtension
     {
         services.AddHttpClient();
 
-        services.AddKeyedTransient<IPaymentProxy, EcPayProxy>(nameof(PaymentProvider.EcPay));
-        services.AddTransient<IEcPayService, EcPayService>();
+        services.AddKeyedTransient<IOrderApplyService, EcPayApplyService>(nameof(PaymentProvider.EcPay));
+        services.AddTransient<IEcPayNotifyService, EcPayNotifyService>();
+        services.AddTransient<IEcPayNotifyService, EcPayNotifyService>();
 
         return services;
     }
