@@ -1,4 +1,4 @@
-﻿namespace Maus.Server.Domain.Payment.EcPay;
+﻿namespace Maus.Server.Payment.EcPay.Interfaces;
 
 public interface IEcPayProxy
 {

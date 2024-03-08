@@ -1,10 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 using System.Web;
 using ECPay.Payment.Integration;
-using Maus.Domain.Payment;
 using Maus.Server.Extensions;
 
-namespace Maus.Server.Domain.Payment.EcPay.Models;
+namespace Maus.Server.Payment.EcPay.Models;
 
 public class EcPayAllPaymentRequest
 {
@@ -16,7 +15,7 @@ public class EcPayAllPaymentRequest
         PaymentType = "aio";
         TotalAmount = (int)orderDetail.RequestAmount;
         TradeDesc = "交易描述";
-        ItemName = string.Empty;
+        ItemName = "testing";
         ReturnUrl = "https://www.ecpay.com.tw/example/receive";
         ChoosePayment = PaymentMethod.ALL.ToString();
         EncryptType = 1;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Maus.Server.Domain.Payment;
+namespace Maus.Server.Payment;
 
 public interface IOrderApplyService
 {

@@ -1,9 +1,8 @@
-using Maus.Domain.Payment.EcPay.Models;
-using Maus.Server.Domain.Payment;
-using Maus.Server.Domain.Payment.EcPay;
+using Maus.Server.Payment.EcPay.Interfaces;
+using Maus.Server.Payment.EcPay.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Maus.Server.Web.Controllers;
+namespace Maus.Server.Payment.EcPay;
 
 [ApiController]
 [Route("[controller]")]

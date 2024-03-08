@@ -1,7 +1,8 @@
-﻿using Maus.Server.Domain.Payment.EcPay.Models;
-using Maus.Server.Extensions;
+﻿using Maus.Server.Extensions;
+using Maus.Server.Payment.EcPay.Interfaces;
+using Maus.Server.Payment.EcPay.Models;
 
-namespace Maus.Server.Domain.Payment.EcPay;
+namespace Maus.Server.Payment.EcPay;
 
 public class EcPayProxy(HttpClient httpClient) : IEcPayProxy
 {

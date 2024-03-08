@@ -1,6 +1,6 @@
-﻿using Maus.Domain.Payment.EcPay.Models;
+﻿using Maus.Server.Payment.EcPay.Models;
 
-namespace Maus.Server.Domain.Payment.EcPay;
+namespace Maus.Server.Payment.EcPay.Interfaces;
 
 public interface IEcPayNotifyService
 {

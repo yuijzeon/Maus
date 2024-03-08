@@ -1,4 +1,4 @@
-﻿namespace Maus.Server.Domain.Payment;
+﻿namespace Maus.Server.Payment;
 
 public class OrderDetail
 {

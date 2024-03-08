@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using ECPay.Payment.Integration;
-using Maus.Domain.Payment.EcPay.Models;
+using Maus.Server.Payment.EcPay.Interfaces;
+using Maus.Server.Payment.EcPay.Models;
 
-namespace Maus.Server.Domain.Payment.EcPay;
+namespace Maus.Server.Payment.EcPay;
 
 public class EcPayNotifyService : IEcPayNotifyService
 {

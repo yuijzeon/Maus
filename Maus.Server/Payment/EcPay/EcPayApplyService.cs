@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Maus.Server.Payment.EcPay.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Maus.Server.Domain.Payment.EcPay;
+namespace Maus.Server.Payment.EcPay;
 
 public class EcPayApplyService(IEcPayProxy ecPayProxy) : IOrderApplyService
 {
