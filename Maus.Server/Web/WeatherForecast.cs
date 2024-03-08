@@ -1,4 +1,4 @@
-namespace Maus.Web
+namespace Maus.Server.Web
 {
     public class WeatherForecast
     {

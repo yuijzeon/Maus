@@ -1,8 +1,7 @@
-﻿using Maus.Domain.Payment;
-using Maus.Domain.Payment.EcPay;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Maus.Server.Domain.Payment;
+using Maus.Server.Domain.Payment.EcPay;
 
-namespace Maus.Domain;
+namespace Maus.Server.Domain;
 
 public static class InjectionExtension
 {

@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Maus.Domain\Maus.Domain.csproj" />
+    <ProjectReference Include="..\Maus.Server\Maus.Server.csproj" />
   </ItemGroup>
 
 </Project>

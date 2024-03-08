@@ -1,4 +1,4 @@
-﻿namespace Maus.Domain.Payment;
+﻿namespace Maus.Server.Domain.Payment;
 
 public enum PaymentProvider
 {

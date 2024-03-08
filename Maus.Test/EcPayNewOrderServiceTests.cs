@@ -1,5 +1,5 @@
-using Maus.Domain.Payment;
-using Maus.Domain.Payment.EcPay;
+using Maus.Server.Domain.Payment;
+using Maus.Server.Domain.Payment.EcPay;
 
 namespace Maus.Test;
 
@@ -18,7 +18,13 @@ public class EcPayApplyServiceTests
     [TestMethod]
     public async Task ec_pay_create_order()
     {
-        var request = new PaymentRequest();
+        var request = new OrderDetail
+        {
+            OrderNo = "ABBY" + new Random().Next(0, 99999),
+            CreatedDate = DateTimeOffset.Now,
+            RequestAmount = 3280
+        };
+
         var action = async () => await _ecPayApplyService.CreatePayIn(request);
         await action.Should().NotThrowAsync();
     }
