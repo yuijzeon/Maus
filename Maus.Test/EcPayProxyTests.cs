@@ -11,7 +11,8 @@ public class EcPayProxyTests
     [TestInitialize]
     public void Initialize()
     {
-        _paymentProxy = new EcPayProxy();
+        var httpClient = Substitute.For<HttpClient>();
+        _paymentProxy = new EcPayProxy(httpClient);
     }
 
     [TestMethod]

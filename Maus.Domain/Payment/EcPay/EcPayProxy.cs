@@ -3,7 +3,7 @@ using HttpMethod = ECPay.Payment.Integration.HttpMethod;
 
 namespace Maus.Domain.Payment.EcPay;
 
-public class EcPayProxy : IPaymentProxy
+public class EcPayProxy(HttpClient httpClient) : IPaymentProxy
 {
     public async Task<object> CreatePayIn(PaymentRequest request)
     {
