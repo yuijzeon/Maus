@@ -4,21 +4,21 @@ using Maus.Domain.Payment.EcPay;
 namespace Maus.Test;
 
 [TestClass]
-public class EcPayServiceTests
+public class EcPayProxyTests
 {
-    private IPaymentService _paymentService = null!;
+    private IPaymentProxy _paymentProxy = null!;
 
     [TestInitialize]
     public void Initialize()
     {
-        _paymentService = new EcPayService();
+        _paymentProxy = new EcPayProxy();
     }
 
     [TestMethod]
     public async Task ec_pay_create_order()
     {
         var request = new PaymentRequest();
-
-        await _paymentService.CreatePayIn(request);
+        var action = async () => await _paymentProxy.CreatePayIn(request);
+        await action.Should().NotThrowAsync();
     }
 }

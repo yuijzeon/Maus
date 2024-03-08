@@ -6,12 +6,21 @@ namespace Maus.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class EcPayController(IEcPayService ecPayService, ILogger<EcPayController> logger) : ControllerBase
+public class EcPayController(
+    IEcPayService ecPayService,
+    [FromKeyedServices(nameof(PaymentProvider.EcPay))]
+    IPaymentProxy paymentProxy,
+    ILogger<EcPayController> logger) : ControllerBase
 {
+    [HttpPost("test-pay-in")]
+    public async Task<object> CreatePayIn()
+    {
+        return await paymentProxy.CreatePayIn(new PaymentRequest());
+    }
 
     [HttpGet("[action]")]
-    public async Task PayInCallback()
+    public async Task<object> PayInNotify(EcPayPayInCallback request)
     {
-        await ecPayService.PayInCallback();
+        return await ecPayService.PayInNotify(request);
     }
 }

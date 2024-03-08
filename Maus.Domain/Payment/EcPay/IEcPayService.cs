@@ -1,6 +1,6 @@
 ﻿namespace Maus.Domain.Payment.EcPay;
 
-public interface IEcPayService : IPaymentService
+public interface IEcPayService
 {
-    Task PayInCallback();
+    Task<object> PayInNotify(EcPayPayInCallback request);
 }
