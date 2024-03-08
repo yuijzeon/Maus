@@ -1,6 +1,6 @@
 ﻿namespace Maus.Domain.Payment;
 
-public interface IPaymentService
+public interface IPaymentProvider
 {
     Task PayAsync(PaymentRequest request);
 }
