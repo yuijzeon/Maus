@@ -6,12 +6,12 @@ namespace Maus.Test;
 [TestClass]
 public class EcPayServiceTests
 {
-    private IPaymentProvider _paymentProvider = null!;
+    private IPaymentService _paymentService = null!;
 
     [TestInitialize]
     public void Initialize()
     {
-        _paymentProvider = new EcPayService();
+        _paymentService = new EcPayService();
     }
 
     [TestMethod]
@@ -19,6 +19,6 @@ public class EcPayServiceTests
     {
         var request = new PaymentRequest();
 
-        await _paymentProvider.PayAsync(request);
+        await _paymentService.CreatePayIn(request);
     }
 }
