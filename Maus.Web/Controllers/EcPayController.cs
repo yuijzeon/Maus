@@ -14,7 +14,7 @@ public class EcPayController(
     ILogger<EcPayController> logger) : ControllerBase
 {
     [HttpPost("test-pay-in")]
-    public async Task<object> CreatePayIn()
+    public async Task<object?> CreatePayIn()
     {
         return await ecPayApplyService.CreatePayIn(new PaymentRequest());
     }

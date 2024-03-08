@@ -2,5 +2,5 @@
 
 public interface IOrderApplyService
 {
-    Task<object> CreatePayIn(PaymentRequest request);
+    Task<object?> CreatePayIn(PaymentRequest request);
 }
