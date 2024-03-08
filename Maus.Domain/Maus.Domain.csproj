@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ECPay.Payment.Integration" Version="1.0.0.8" />
+  </ItemGroup>
+
 </Project>
