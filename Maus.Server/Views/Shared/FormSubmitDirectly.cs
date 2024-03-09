@@ -1,4 +1,4 @@
-﻿namespace Maus.Server.Views;
+﻿namespace Maus.Server.Views.Shared;
 
 public class FormSubmitDirectly
 {

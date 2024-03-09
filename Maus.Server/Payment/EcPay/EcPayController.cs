@@ -13,7 +13,7 @@ public class EcPayController(
     ILogger<EcPayController> logger) : ControllerBase
 {
     [HttpGet("test")]
-    public async Task<object?> CreatePayIn()
+    public async Task<IActionResult> CreatePayIn()
     {
         var orderDetail = new OrderDetail
         {

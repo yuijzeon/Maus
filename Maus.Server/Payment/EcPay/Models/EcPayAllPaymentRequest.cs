@@ -19,7 +19,7 @@ public class EcPayAllPaymentRequest
         ReturnUrl = "https://www.ecpay.com.tw/example/receive";
         ChoosePayment = PaymentMethod.ALL.ToString();
         EncryptType = 1;
-        CheckMacValue = GeneratorSignature(paymentChannel);
+        CheckMacValue = GenerateSignature(paymentChannel);
     }
 
     [JsonPropertyName("MerchantID")]
@@ -55,7 +55,7 @@ public class EcPayAllPaymentRequest
     [JsonPropertyName("EncryptType")]
     public int EncryptType { get; set; }
 
-    private string GeneratorSignature(PaymentChannel paymentChannel)
+    private string GenerateSignature(PaymentChannel paymentChannel)
     {
         var keyValuePairs = ((List<KeyValuePair<string, string>>)
         [
@@ -63,7 +63,7 @@ public class EcPayAllPaymentRequest
             ..this.ToStringDictionary()
                 .Where(x => x.Key != "CheckMacValue")
                 .OrderBy(x => x.Key),
-            new KeyValuePair<string, string>("HashIV", paymentChannel.MerchantHashIv)
+            new KeyValuePair<string, string>("HashIV", paymentChannel.MerchantIv)
         ]).Select(x => $"{x.Key}={x.Value}");
 
         var preSignature = string.Join("&", keyValuePairs);
