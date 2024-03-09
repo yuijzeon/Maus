@@ -7,7 +7,7 @@ namespace Maus.Server.Payment.EcPay;
 
 public class EcPayNotifyService : IEcPayNotifyService
 {
-    public Task PayInNotify(EcPayPayInCallback request)
+    public Task DepositCallback(EcPayPayInCallback request)
     {
         using (var oPayment = new AllInOne())
         {

@@ -4,5 +4,5 @@ namespace Maus.Server.Payment.EcPay.Interfaces;
 
 public interface IEcPayNotifyService
 {
-    Task PayInNotify(EcPayPayInCallback request);
+    Task DepositCallback(EcPayPayInCallback request);
 }

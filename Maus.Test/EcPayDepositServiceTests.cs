@@ -1,19 +1,20 @@
 using Maus.Server.Payment;
 using Maus.Server.Payment.EcPay;
-using Maus.Server.Payment.EcPay.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Maus.Test;
 
 [TestClass]
-public class EcPayApplyServiceTests
+public class EcPayDepositServiceTests
 {
-    private IOrderApplyService _ecPayApplyService = null!;
+    private IDepositService _ecPayDepositService = null!;
+    private Controller _controller = null!;
 
     [TestInitialize]
     public void Initialize()
     {
-        var ecPayProxy = Substitute.For<IEcPayProxy>();
-        _ecPayApplyService = new EcPayApplyService(ecPayProxy);
+        _ecPayDepositService = new EcPayDepositService();
+        _controller = new EmptyController();
     }
 
     [TestMethod]
@@ -25,8 +26,8 @@ public class EcPayApplyServiceTests
             CreatedDate = DateTimeOffset.Now,
             RequestAmount = 3280
         };
-
-        var action = async () => await _ecPayApplyService.CreatePayIn(request);
+        
+        var action = async () => await _ecPayDepositService.Deposit(request, _controller);
         await action.Should().NotThrowAsync();
     }
 }

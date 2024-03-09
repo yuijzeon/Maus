@@ -16,7 +16,7 @@ public class EcPayAllPaymentRequest
         TotalAmount = (int)orderDetail.RequestAmount;
         TradeDesc = "交易描述";
         ItemName = "testing";
-        ReturnUrl = "https://www.ecpay.com.tw/example/receive";
+        ReturnUrl = paymentChannel.CallbackUrl;
         ChoosePayment = PaymentMethod.ALL.ToString();
         EncryptType = 1;
         CheckMacValue = GenerateSignature(paymentChannel);
