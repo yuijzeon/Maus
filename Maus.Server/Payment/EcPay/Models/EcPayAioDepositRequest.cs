@@ -5,22 +5,22 @@ using Maus.Server.Extensions;
 
 namespace Maus.Server.Payment.EcPay.Models;
 
-public class EcPayAioDepositRequest(PaymentChannel paymentChannel, OrderDetail orderDetail)
+public class EcPayAioDepositRequest(PaymentChannel paymentChannel, Transaction transaction)
 {
     [JsonPropertyName("MerchantID")]
     public string MerchantId { get; set; } = paymentChannel.MerchantCode;
 
     [JsonPropertyName("MerchantTradeNo")]
-    public string MerchantTradeNo { get; set; } = orderDetail.OrderNo;
+    public string MerchantTradeNo { get; set; } = transaction.TransactionNo;
 
     [JsonPropertyName("MerchantTradeDate")]
-    public string MerchantTradeDate { get; set; } = orderDetail.CreatedDate.ToString("yyyy/MM/dd HH:mm:ss");
+    public string MerchantTradeDate { get; set; } = transaction.CreatedDate.ToString("yyyy/MM/dd HH:mm:ss");
 
     [JsonPropertyName("PaymentType")]
     public string PaymentType { get; set; } = "aio";
 
     [JsonPropertyName("TotalAmount")]
-    public int TotalAmount { get; set; } = (int)orderDetail.RequestAmount;
+    public int TotalAmount { get; set; } = (int)transaction.RequestAmount;
 
     [JsonPropertyName("TradeDesc")]
     public string TradeDesc { get; set; } = "交易描述";

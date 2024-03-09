@@ -1,8 +1,8 @@
 ﻿namespace Maus.Server.Payment;
 
-public class OrderDetail
+public class Transaction
 {
-    public required string OrderNo { get; set; }
+    public required string TransactionNo { get; set; }
     public DateTimeOffset CreatedDate { get; set; }
     public decimal RequestAmount { get; set; }
 }

@@ -9,15 +9,16 @@ namespace Maus.Server.Payment.EcPay;
 public class EcPayController(
     IEcPayNotifyService ecPayNotifyService,
     [FromKeyedServices(nameof(PaymentProvider.EcPay))]
-    IDepositService ecPayDepositService)
+    IDepositService ecPayDepositService,
+    ILogger<EcPayController> logger)
     : Controller
 {
     [HttpGet("test")]
     public async Task<IActionResult> CreateTestDeposit()
     {
-        var orderDetail = new OrderDetail
+        var orderDetail = new Transaction
         {
-            OrderNo = "ABBY" + new Random().Next(0, 99999),
+            TransactionNo = "ABBY" + new Random().Next(0, 99999),
             CreatedDate = DateTimeOffset.Now,
             RequestAmount = 3280
         };
@@ -26,8 +27,9 @@ public class EcPayController(
     }
 
     [HttpGet("callback")]
-    public async Task<IActionResult> Callback(EcPayPayInCallback request)
+    public async Task<IActionResult> Callback([FromForm] EcPayPayInCallback request)
     {
+        logger.LogInformation("EcPay callback: {@request}", request);
         await ecPayNotifyService.DepositCallback(request);
         return Ok("1|OK");
     }

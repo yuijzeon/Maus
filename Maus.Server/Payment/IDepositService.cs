@@ -4,5 +4,5 @@ namespace Maus.Server.Payment;
 
 public interface IDepositService
 {
-    Task<IActionResult> Deposit(OrderDetail orderDetail, Controller controller);
+    Task<IActionResult> Deposit(Transaction transaction, Controller controller);
 }

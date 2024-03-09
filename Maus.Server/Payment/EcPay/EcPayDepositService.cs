@@ -7,7 +7,7 @@ namespace Maus.Server.Payment.EcPay;
 
 public class EcPayDepositService : IDepositService
 {
-    public Task<IActionResult> Deposit(OrderDetail orderDetail, Controller controller)
+    public Task<IActionResult> Deposit(Transaction transaction, Controller controller)
     {
         var paymentChannel = new PaymentChannel
         {
@@ -19,7 +19,7 @@ public class EcPayDepositService : IDepositService
             CallbackUrl = "https://3152-2001-b011-4002-1b86-d5ea-b70a-3392-3829.ngrok-free.app/ec-pay/callback"
         };
 
-        var request = new EcPayAioDepositRequest(paymentChannel, orderDetail);
+        var request = new EcPayAioDepositRequest(paymentChannel, transaction);
         request.GenerateSignature(paymentChannel.MerchantKey, paymentChannel.MerchantIv);
 
         var view = controller.View("FormSubmitDirectly", new FormSubmitDirectly

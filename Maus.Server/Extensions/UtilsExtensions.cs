@@ -4,12 +4,22 @@ using System.Text.Json;
 
 namespace Maus.Server.Extensions;
 
-public static class ObjectExtensions
+public static class UtilsExtensions
 {
+    public static string ToJsonString(this object obj)
+    {
+        return JsonSerializer.Serialize(obj);
+    }
+
+    public static T? FromJson<T>(this string json)
+    {
+        return JsonSerializer.Deserialize<T>(json) ?? default(T);
+    }
+
     public static Dictionary<string, string> ToStringDictionary(this object obj)
     {
-        var json = JsonSerializer.Serialize(obj);
-        var dictionary = JsonSerializer.Deserialize<Dictionary<string, object?>>(json)?
+        var dictionary = obj.ToJsonString()
+            .FromJson<Dictionary<string, object?>>()?
             .ToDictionary(x => x.Key, x => x.Value?.ToString() ?? string.Empty);
         return dictionary ?? new Dictionary<string, string>();
     }

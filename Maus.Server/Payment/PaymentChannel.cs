@@ -7,5 +7,5 @@ public class PaymentChannel
     public required string MerchantKey { get; set; }
     public required string SubmitUrl { get; set; }
     public required string CallbackUrl { get; set; }
-    public string MerchantIv { get; set; } = string.Empty;
+    public string? MerchantIv { get; set; }
 }

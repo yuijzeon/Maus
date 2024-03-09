@@ -7,7 +7,7 @@ namespace Maus.Test;
 [TestClass]
 public class EcPayDepositServiceTests
 {
-    private IDepositService _ecPayDepositService = null!;
+    private EcPayDepositService _ecPayDepositService = null!;
     private Controller _controller = null!;
 
     [TestInitialize]
@@ -20,9 +20,9 @@ public class EcPayDepositServiceTests
     [TestMethod]
     public async Task ec_pay_create_order()
     {
-        var request = new OrderDetail
+        var request = new Transaction
         {
-            OrderNo = "ABBY" + new Random().Next(0, 99999),
+            TransactionNo = "ABBY" + new Random().Next(0, 99999),
             CreatedDate = DateTimeOffset.Now,
             RequestAmount = 3280
         };
