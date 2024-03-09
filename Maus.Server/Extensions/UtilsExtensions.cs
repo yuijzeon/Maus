@@ -11,7 +11,7 @@ public static class UtilsExtensions
         return JsonSerializer.Serialize(obj);
     }
 
-    public static T? FromJson<T>(this string json)
+    public static T FromJson<T>(this string json)
     {
         return JsonSerializer.Deserialize<T>(json) ?? default(T);
     }
@@ -19,7 +19,7 @@ public static class UtilsExtensions
     public static Dictionary<string, string> ToStringDictionary(this object obj)
     {
         var dictionary = obj.ToJsonString()
-            .FromJson<Dictionary<string, object?>>()?
+            .FromJson<Dictionary<string, object>>()?
             .ToDictionary(x => x.Key, x => x.Value?.ToString() ?? string.Empty);
         return dictionary ?? new Dictionary<string, string>();
     }

@@ -35,7 +35,7 @@ public class EcPayAioDepositRequest(PaymentChannel paymentChannel, Transaction t
     public string ChoosePayment { get; set; } = PaymentMethod.ALL.ToString();
 
     [JsonPropertyName("CheckMacValue")]
-    public string? CheckMacValue { get; set; }
+    public string CheckMacValue { get; set; }
 
     [JsonPropertyName("EncryptType")]
     public int EncryptType { get; set; } = 1;

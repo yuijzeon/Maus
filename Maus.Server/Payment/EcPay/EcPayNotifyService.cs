@@ -7,13 +7,13 @@ namespace Maus.Server.Payment.EcPay;
 
 public class EcPayNotifyService : IEcPayNotifyService
 {
-    public Task DepositCallback(EcPayPayInCallback request)
+    public Task DepositCallback(EcPayDepositCallback request)
     {
         using (var oPayment = new AllInOne())
         {
             oPayment.HashKey = "5294y06JbISpM5x9"; //ECPay 提供的 HashKey
             oPayment.HashIV = "v77hoKGq4kWxNNIS"; //ECPay 提供的 HashIV
-            Hashtable? hashtable = null;
+            Hashtable hashtable = null;
             oPayment.CheckOutFeedback(new SortedDictionary<string, string>(), ref hashtable);
         }
 

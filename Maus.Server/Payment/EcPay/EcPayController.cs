@@ -1,3 +1,5 @@
+using System.Collections.Specialized;
+using Maus.Server.Extensions;
 using Maus.Server.Payment.EcPay.Interfaces;
 using Maus.Server.Payment.EcPay.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -26,11 +28,11 @@ public class EcPayController(
         return await ecPayDepositService.Deposit(orderDetail, this);
     }
 
-    [HttpGet("callback")]
-    public async Task<IActionResult> Callback([FromForm] EcPayPayInCallback request)
+    [HttpPost("callback")]
+    public async Task<IActionResult> Callback([FromForm] EcPayDepositCallback request1)
     {
-        logger.LogInformation("EcPay callback: {@request}", request);
-        await ecPayNotifyService.DepositCallback(request);
+        logger.LogInformation("EcPay callback: {@request}", request1.ToJsonString());
+        // await ecPayNotifyService.DepositCallback(request);
         return Ok("1|OK");
     }
 }
