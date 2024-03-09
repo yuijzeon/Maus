@@ -1,5 +1,4 @@
-﻿using System.Collections.Specialized;
-using Maus.Server.Payment.EcPay.Models;
+﻿using Maus.Server.Payment.EcPay.Models;
 
 namespace Maus.Server.Payment.EcPay.Interfaces;
 
