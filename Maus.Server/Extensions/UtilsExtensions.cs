@@ -1,6 +1,9 @@
-﻿using System.Security.Cryptography;
+﻿using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Maus.Server.Extensions;
 
@@ -18,10 +21,12 @@ public static class UtilsExtensions
 
     public static Dictionary<string, string> ToStringDictionary(this object obj)
     {
-        var dictionary = obj.ToJsonString()
-            .FromJson<Dictionary<string, object>>()?
-            .ToDictionary(x => x.Key, x => x.Value?.ToString() ?? string.Empty);
-        return dictionary ?? new Dictionary<string, string>();
+        return obj.GetType().GetProperties().ToDictionary(p =>
+        {
+            var bindProperty = p.GetCustomAttribute<BindPropertyAttribute>();
+            var jsonProperty = p.GetCustomAttribute<JsonPropertyNameAttribute>();
+            return bindProperty?.Name ?? jsonProperty?.Name ?? p.Name;
+        }, p => p.GetValue(obj)?.ToString());
     }
 
     public static string ToSha256String(this string value)

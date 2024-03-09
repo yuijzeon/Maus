@@ -1,11 +1,10 @@
 ﻿using System.Text.Json.Serialization;
-using System.Web;
 using ECPay.Payment.Integration;
-using Maus.Server.Extensions;
+using Maus.Server.Payment.EcPay.Utils;
 
 namespace Maus.Server.Payment.EcPay.Models;
 
-public class EcPayAioDepositRequest(PaymentChannel paymentChannel, Transaction transaction)
+public class EcPayDepositRequest(PaymentChannel paymentChannel, Transaction transaction)
 {
     [JsonPropertyName("MerchantID")]
     public string MerchantId { get; set; } = paymentChannel.MerchantCode;
@@ -42,17 +41,6 @@ public class EcPayAioDepositRequest(PaymentChannel paymentChannel, Transaction t
 
     public void GenerateSignature(string hashKey, string hashIv)
     {
-        var keyValuePairs = ((List<KeyValuePair<string, string>>)
-        [
-            new KeyValuePair<string, string>("HashKey", hashKey),
-            ..this.ToStringDictionary()
-                .Where(x => x.Key != "CheckMacValue")
-                .OrderBy(x => x.Key),
-            new KeyValuePair<string, string>("HashIV", hashIv)
-        ]).Select(x => $"{x.Key}={x.Value}");
-
-        var preSignature = string.Join("&", keyValuePairs);
-
-        CheckMacValue = HttpUtility.UrlEncode(preSignature).ToLower().ToSha256String().ToUpper();
+        CheckMacValue = EcPayHelper.GenerateSignature(this, hashKey, hashIv);
     }
 }

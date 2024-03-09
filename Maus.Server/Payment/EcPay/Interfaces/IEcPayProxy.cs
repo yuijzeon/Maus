@@ -2,5 +2,5 @@
 
 public interface IEcPayProxy
 {
-    Task<string> AioCheckOut(PaymentChannel paymentChannel, Transaction transaction);
+    /*Task<string> AioCheckOut(PaymentChannel paymentChannel, Transaction transaction);*/
 }

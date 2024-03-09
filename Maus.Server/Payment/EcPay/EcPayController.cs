@@ -29,10 +29,9 @@ public class EcPayController(
     }
 
     [HttpPost("callback")]
-    public async Task<IActionResult> Callback([FromForm] EcPayDepositCallback request1)
+    public async Task<IActionResult> Callback([FromForm] EcPayDepositCallback request)
     {
-        logger.LogInformation("EcPay callback: {@request}", request1.ToJsonString());
-        // await ecPayNotifyService.DepositCallback(request);
+        await ecPayNotifyService.DepositCallback(request);
         return Ok("1|OK");
     }
 }

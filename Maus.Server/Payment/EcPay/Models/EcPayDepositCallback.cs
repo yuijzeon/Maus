@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Maus.Server.Payment.EcPay.Utils;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Maus.Server.Payment.EcPay.Models;
 
 public class EcPayDepositCallback
 {
     [BindProperty(Name = "MerchantID")]
-    public string MerchantId { get; set; }
+    public string MerchantCode { get; set; }
 
     [BindProperty(Name = "MerchantTradeNo")]
     public string MerchantTradeNo { get; set; }
@@ -54,4 +55,10 @@ public class EcPayDepositCallback
 
     [BindProperty(Name = "CheckMacValue")]
     public string CheckMacValue { get; set; }
+
+    public void CheckSignature(string hashKey, string hashIv)
+    {
+        var checkMacValue = EcPayHelper.GenerateSignature(this, hashKey, hashIv);
+        if (checkMacValue != CheckMacValue) throw new Exception("Invalid signature");
+    }
 }
