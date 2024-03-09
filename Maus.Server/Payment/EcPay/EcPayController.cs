@@ -1,4 +1,3 @@
-using System.Collections.Specialized;
 using Maus.Server.Payment.EcPay.Interfaces;
 using Maus.Server.Payment.EcPay.Models;
 using Microsoft.AspNetCore.Mvc;
