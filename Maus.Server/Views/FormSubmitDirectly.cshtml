@@ -1,0 +1,24 @@
+﻿@model Maus.Server.Views.FormSubmitDirectly
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+<h1>畫面跳轉中 請稍後</h1>
+
+<form action="@Model.ActionUrl" method="post">
+    @foreach (var input in Model.NameValues)
+    {
+        <input type="hidden" name="@input.Key" value="@input.Value"/>
+    }
+</form>
+
+<script>
+    document.forms[0].submit();
+</script>
+</body>
+</html>

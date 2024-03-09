@@ -12,7 +12,7 @@ public class EcPayController(
     IOrderApplyService ecPayApplyService,
     ILogger<EcPayController> logger) : ControllerBase
 {
-    [HttpPost("test-pay-in")]
+    [HttpGet("test")]
     public async Task<object?> CreatePayIn()
     {
         var orderDetail = new OrderDetail
@@ -22,7 +22,6 @@ public class EcPayController(
             RequestAmount = 3280,
         };
         
-        Content(orderDetail.OrderNo);
         return await ecPayApplyService.CreatePayIn(orderDetail);
     }
 
