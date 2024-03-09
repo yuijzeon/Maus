@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Specialized;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -27,6 +28,25 @@ public static class UtilsExtensions
             var jsonProperty = p.GetCustomAttribute<JsonPropertyNameAttribute>();
             return bindProperty?.Name ?? jsonProperty?.Name ?? p.Name;
         }, p => p.GetValue(obj)?.ToString());
+    }
+
+    public static T Parse<T>(this NameValueCollection obj)
+    {
+        var result = Activator.CreateInstance<T>();
+        var propertyInfos = typeof(T).GetProperties();
+        foreach (var propertyInfo in propertyInfos)
+        {
+            var bindProperty = propertyInfo.GetCustomAttribute<BindPropertyAttribute>();
+            var jsonProperty = propertyInfo.GetCustomAttribute<JsonPropertyNameAttribute>();
+            var key = bindProperty?.Name ?? jsonProperty?.Name ?? propertyInfo.Name;
+            var value = obj[key];
+            if (value != null)
+            {
+                propertyInfo.SetValue(result, Convert.ChangeType(value, propertyInfo.PropertyType));
+            }
+        }
+
+        return result;
     }
 
     public static string ToSha256String(this string value)

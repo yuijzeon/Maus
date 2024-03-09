@@ -1,5 +1,4 @@
 using System.Collections.Specialized;
-using Maus.Server.Extensions;
 using Maus.Server.Payment.EcPay.Interfaces;
 using Maus.Server.Payment.EcPay.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +8,10 @@ namespace Maus.Server.Payment.EcPay;
 [ApiController]
 [Route("ec-pay")]
 public class EcPayController(
-    IEcPayNotifyService ecPayNotifyService,
+    IEcPayProxy ecPayProxy,
+    IPaymentChanelRepository paymentChanelRepository,
     [FromKeyedServices(nameof(PaymentProvider.EcPay))]
-    IDepositService ecPayDepositService,
-    ILogger<EcPayController> logger)
+    IDepositService ecPayDepositService)
     : Controller
 {
     [HttpGet("test")]
@@ -31,7 +30,17 @@ public class EcPayController(
     [HttpPost("callback")]
     public async Task<IActionResult> Callback([FromForm] EcPayDepositCallback request)
     {
-        await ecPayNotifyService.DepositCallback(request);
+        var paymentChannel = paymentChanelRepository.GetPaymentChannel(PaymentProvider.EcPay);
+        request.CheckSignature(paymentChannel.MerchantKey, paymentChannel.MerchantIv);
+        var query = await ecPayProxy.Query(request.MerchantTradeNo, paymentChannel);
         return Ok("1|OK");
+    }
+    
+    [HttpGet("query")]
+    public async Task<EcPayQueryResponse> Query(string transactionNo)
+    {
+        var paymentChannel = paymentChanelRepository.GetPaymentChannel(PaymentProvider.EcPay);
+        var query = await ecPayProxy.Query(transactionNo, paymentChannel);
+        return query;
     }
 }

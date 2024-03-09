@@ -1,9 +1,8 @@
-﻿using Maus.Server.Payment.EcPay.Utils;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Maus.Server.Payment.EcPay.Models;
 
-public class EcPayDepositCallback
+public class EcPayQueryResponse
 {
     [BindProperty(Name = "MerchantID")]
     public string MerchantId { get; set; }
@@ -13,12 +12,6 @@ public class EcPayDepositCallback
 
     [BindProperty(Name = "StoreID")]
     public string StoreId { get; set; }
-
-    [BindProperty(Name = "RtnCode")]
-    public int RtnCode { get; set; }
-
-    [BindProperty(Name = "RtnMsg")]
-    public string RtnMsg { get; set; }
 
     [BindProperty(Name = "TradeNo")]
     public string TradeNo { get; set; }
@@ -32,14 +25,20 @@ public class EcPayDepositCallback
     [BindProperty(Name = "PaymentType")]
     public string PaymentType { get; set; }
 
+    [BindProperty(Name = "HandlingCharge")]
+    public int HandlingCharge { get; set; }
+
     [BindProperty(Name = "PaymentTypeChargeFee")]
     public int PaymentTypeChargeFee { get; set; }
 
     [BindProperty(Name = "TradeDate")]
     public string TradeDate { get; set; }
 
-    [BindProperty(Name = "SimulatePaid")]
-    public int SimulatePaid { get; set; }
+    [BindProperty(Name = "TradeStatus")]
+    public string TradeStatus { get; set; }
+
+    [BindProperty(Name = "ItemName")]
+    public string ItemName { get; set; }
 
     [BindProperty(Name = "CustomField1")]
     public string CustomField1 { get; set; }
@@ -55,10 +54,4 @@ public class EcPayDepositCallback
 
     [BindProperty(Name = "CheckMacValue")]
     public string CheckMacValue { get; set; }
-
-    public void CheckSignature(string hashKey, string hashIv)
-    {
-        var checkMacValue = EcPayHelper.GenerateSignature(this, hashKey, hashIv);
-        if (checkMacValue != CheckMacValue) throw new Exception("Invalid signature");
-    }
 }

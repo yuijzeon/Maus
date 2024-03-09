@@ -1,46 +1,56 @@
-﻿using System.Text.Json.Serialization;
-using ECPay.Payment.Integration;
+﻿using ECPay.Payment.Integration;
 using Maus.Server.Payment.EcPay.Utils;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Maus.Server.Payment.EcPay.Models;
 
-public class EcPayDepositRequest(PaymentChannel paymentChannel, Transaction transaction)
+public class EcPayDepositRequest
 {
-    [JsonPropertyName("MerchantID")]
-    public string MerchantId { get; set; } = paymentChannel.MerchantCode;
+    public EcPayDepositRequest(PaymentChannel paymentChannel, Transaction transaction)
+    {
+        MerchantId = paymentChannel.MerchantCode;
+        MerchantTradeNo = transaction.TransactionNo;
+        MerchantTradeDate = transaction.CreatedDate.ToString("yyyy/MM/dd HH:mm:ss");
+        PaymentType = "aio";
+        TotalAmount = (int)transaction.RequestAmount;
+        TradeDesc = "交易描述";
+        ItemName = "testing";
+        ReturnUrl = paymentChannel.CallbackUrl;
+        ChoosePayment = PaymentMethod.ALL.ToString();
+        EncryptType = 1;
+        CheckMacValue = EcPayHelper.GenerateSignature(this, paymentChannel.MerchantKey, paymentChannel.MerchantIv);
+    }
 
-    [JsonPropertyName("MerchantTradeNo")]
-    public string MerchantTradeNo { get; set; } = transaction.TransactionNo;
+    [BindProperty(Name = "MerchantID")]
+    public string MerchantId { get; set; }
 
-    [JsonPropertyName("MerchantTradeDate")]
-    public string MerchantTradeDate { get; set; } = transaction.CreatedDate.ToString("yyyy/MM/dd HH:mm:ss");
+    [BindProperty(Name = "MerchantTradeNo")]
+    public string MerchantTradeNo { get; set; }
 
-    [JsonPropertyName("PaymentType")]
-    public string PaymentType { get; set; } = "aio";
+    [BindProperty(Name = "MerchantTradeDate")]
+    public string MerchantTradeDate { get; set; }
 
-    [JsonPropertyName("TotalAmount")]
-    public int TotalAmount { get; set; } = (int)transaction.RequestAmount;
+    [BindProperty(Name = "PaymentType")]
+    public string PaymentType { get; set; }
 
-    [JsonPropertyName("TradeDesc")]
-    public string TradeDesc { get; set; } = "交易描述";
+    [BindProperty(Name = "TotalAmount")]
+    public int TotalAmount { get; set; }
 
-    [JsonPropertyName("ItemName")]
-    public string ItemName { get; set; } = "testing";
+    [BindProperty(Name = "TradeDesc")]
+    public string TradeDesc { get; set; }
 
-    [JsonPropertyName("ReturnURL")]
-    public string ReturnUrl { get; set; } = paymentChannel.CallbackUrl;
+    [BindProperty(Name = "ItemName")]
+    public string ItemName { get; set; }
 
-    [JsonPropertyName("ChoosePayment")]
-    public string ChoosePayment { get; set; } = PaymentMethod.ALL.ToString();
+    [BindProperty(Name = "ReturnURL")]
+    public string ReturnUrl { get; set; }
 
-    [JsonPropertyName("CheckMacValue")]
+    [BindProperty(Name = "ChoosePayment")]
+    public string ChoosePayment { get; set; }
+
+    [BindProperty(Name = "CheckMacValue")]
     public string CheckMacValue { get; set; }
 
-    [JsonPropertyName("EncryptType")]
-    public int EncryptType { get; set; } = 1;
-
-    public void GenerateSignature(string hashKey, string hashIv)
-    {
-        CheckMacValue = EcPayHelper.GenerateSignature(this, hashKey, hashIv);
-    }
+    [BindProperty(Name = "EncryptType")]
+    public int EncryptType { get; set; }
 }
