@@ -20,6 +20,7 @@ public class EcPayDepositService : IDepositService
         };
 
         var request = new EcPayAioDepositRequest(paymentChannel, orderDetail);
+        request.GenerateSignature(paymentChannel.MerchantKey, paymentChannel.MerchantIv);
 
         var view = controller.View("FormSubmitDirectly", new FormSubmitDirectly
         {

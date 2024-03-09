@@ -5,69 +5,54 @@ using Maus.Server.Extensions;
 
 namespace Maus.Server.Payment.EcPay.Models;
 
-public class EcPayAioDepositRequest
+public class EcPayAioDepositRequest(PaymentChannel paymentChannel, OrderDetail orderDetail)
 {
-    public EcPayAioDepositRequest(PaymentChannel paymentChannel, OrderDetail orderDetail)
-    {
-        MerchantId = paymentChannel.MerchantCode;
-        MerchantTradeNo = orderDetail.OrderNo;
-        MerchantTradeDate = orderDetail.CreatedDate.ToString("yyyy/MM/dd HH:mm:ss");
-        PaymentType = "aio";
-        TotalAmount = (int)orderDetail.RequestAmount;
-        TradeDesc = "交易描述";
-        ItemName = "testing";
-        ReturnUrl = paymentChannel.CallbackUrl;
-        ChoosePayment = PaymentMethod.ALL.ToString();
-        EncryptType = 1;
-        CheckMacValue = GenerateSignature(paymentChannel);
-    }
-
     [JsonPropertyName("MerchantID")]
-    public string MerchantId { get; set; }
+    public string MerchantId { get; set; } = paymentChannel.MerchantCode;
 
     [JsonPropertyName("MerchantTradeNo")]
-    public string MerchantTradeNo { get; set; }
+    public string MerchantTradeNo { get; set; } = orderDetail.OrderNo;
 
     [JsonPropertyName("MerchantTradeDate")]
-    public string MerchantTradeDate { get; set; }
+    public string MerchantTradeDate { get; set; } = orderDetail.CreatedDate.ToString("yyyy/MM/dd HH:mm:ss");
 
     [JsonPropertyName("PaymentType")]
-    public string PaymentType { get; set; }
+    public string PaymentType { get; set; } = "aio";
 
     [JsonPropertyName("TotalAmount")]
-    public int TotalAmount { get; set; }
+    public int TotalAmount { get; set; } = (int)orderDetail.RequestAmount;
 
     [JsonPropertyName("TradeDesc")]
-    public string TradeDesc { get; set; }
+    public string TradeDesc { get; set; } = "交易描述";
 
     [JsonPropertyName("ItemName")]
-    public string ItemName { get; set; }
+    public string ItemName { get; set; } = "testing";
 
     [JsonPropertyName("ReturnURL")]
-    public string ReturnUrl { get; set; }
+    public string ReturnUrl { get; set; } = paymentChannel.CallbackUrl;
 
     [JsonPropertyName("ChoosePayment")]
-    public string ChoosePayment { get; set; }
+    public string ChoosePayment { get; set; } = PaymentMethod.ALL.ToString();
 
     [JsonPropertyName("CheckMacValue")]
-    public string CheckMacValue { get; set; }
+    public string? CheckMacValue { get; set; }
 
     [JsonPropertyName("EncryptType")]
-    public int EncryptType { get; set; }
+    public int EncryptType { get; set; } = 1;
 
-    private string GenerateSignature(PaymentChannel paymentChannel)
+    public void GenerateSignature(string hashKey, string hashIv)
     {
         var keyValuePairs = ((List<KeyValuePair<string, string>>)
         [
-            new KeyValuePair<string, string>("HashKey", paymentChannel.MerchantKey),
+            new KeyValuePair<string, string>("HashKey", hashKey),
             ..this.ToStringDictionary()
                 .Where(x => x.Key != "CheckMacValue")
                 .OrderBy(x => x.Key),
-            new KeyValuePair<string, string>("HashIV", paymentChannel.MerchantIv)
+            new KeyValuePair<string, string>("HashIV", hashIv)
         ]).Select(x => $"{x.Key}={x.Value}");
 
         var preSignature = string.Join("&", keyValuePairs);
 
-        return HttpUtility.UrlEncode(preSignature).ToLower().ToSha256String().ToUpper();
+        CheckMacValue = HttpUtility.UrlEncode(preSignature).ToLower().ToSha256String().ToUpper();
     }
 }
