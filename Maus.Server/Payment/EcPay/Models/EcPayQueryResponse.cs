@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Maus.Server.Payment.EcPay.Utils;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Maus.Server.Payment.EcPay.Models;
 
@@ -54,4 +55,13 @@ public class EcPayQueryResponse
 
     [BindProperty(Name = "CheckMacValue")]
     public string CheckMacValue { get; set; }
+
+    public void CheckSignature(string hashKey, string hashIv)
+    {
+        var signature = EcPayHelper.GenerateSignature(this, hashKey, hashIv);
+        if (signature != CheckMacValue)
+        {
+            throw new Exception("Invalid signature");
+        }
+    }
 }

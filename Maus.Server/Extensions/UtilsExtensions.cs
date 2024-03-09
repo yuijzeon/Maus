@@ -30,7 +30,7 @@ public static class UtilsExtensions
         }, p => p.GetValue(obj)?.ToString());
     }
 
-    public static T Parse<T>(this NameValueCollection obj)
+    public static T ParseTo<T>(this NameValueCollection obj)
     {
         var result = Activator.CreateInstance<T>();
         var propertyInfos = typeof(T).GetProperties();
