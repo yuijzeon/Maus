@@ -19,7 +19,7 @@ public class EcPayDepositService : IDepositService
             CallbackUrl = "https://3152-2001-b011-4002-1b86-d5ea-b70a-3392-3829.ngrok-free.app/ec-pay/callback"
         };
 
-        var request = new EcPayAllPaymentRequest(paymentChannel, orderDetail);
+        var request = new EcPayAioDepositRequest(paymentChannel, orderDetail);
 
         var view = controller.View("FormSubmitDirectly", new FormSubmitDirectly
         {

@@ -8,13 +8,12 @@ namespace Maus.Server.Payment.EcPay;
 [Route("ec-pay")]
 public class EcPayController(
     IEcPayNotifyService ecPayNotifyService,
-    Func<PaymentProvider, IDepositService> getOrderApplyService)
+    [FromKeyedServices(nameof(PaymentProvider.EcPay))]
+    IDepositService ecPayDepositService)
     : Controller
 {
-    private readonly IDepositService _ecPaySubmitService = getOrderApplyService(PaymentProvider.EcPay);
-
     [HttpGet("test")]
-    public async Task<IActionResult> CreateTestOrder()
+    public async Task<IActionResult> CreateTestDeposit()
     {
         var orderDetail = new OrderDetail
         {
@@ -23,7 +22,7 @@ public class EcPayController(
             RequestAmount = 3280
         };
 
-        return await _ecPaySubmitService.Deposit(orderDetail, this);
+        return await ecPayDepositService.Deposit(orderDetail, this);
     }
 
     [HttpGet("callback")]

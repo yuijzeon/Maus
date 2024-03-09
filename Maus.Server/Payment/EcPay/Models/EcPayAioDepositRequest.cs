@@ -5,9 +5,9 @@ using Maus.Server.Extensions;
 
 namespace Maus.Server.Payment.EcPay.Models;
 
-public class EcPayAllPaymentRequest
+public class EcPayAioDepositRequest
 {
-    public EcPayAllPaymentRequest(PaymentChannel paymentChannel, OrderDetail orderDetail)
+    public EcPayAioDepositRequest(PaymentChannel paymentChannel, OrderDetail orderDetail)
     {
         MerchantId = paymentChannel.MerchantCode;
         MerchantTradeNo = orderDetail.OrderNo;
