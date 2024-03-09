@@ -13,4 +13,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\Shared\FormSubmitDirectly.cs">
+      <DependentUpon>FormSubmitDirectly.cshtml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>
