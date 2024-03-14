@@ -5,6 +5,8 @@ using Maus.Server.Repositories;
 
 namespace Maus.Server;
 
+public delegate IDepositService GetDepositService(PaymentProvider serviceProvider);
+
 public static class InjectionExtension
 {
     public static IServiceCollection AddPaymentService(this IServiceCollection services)
@@ -12,16 +14,11 @@ public static class InjectionExtension
         services.AddTransient<IPaymentChanelRepository, PaymentChanelRepository>();
 
         services.AddHttpClient<IEcPayProxy, EcPayProxy>();
-        services.AddKeyedTransient<IDepositService, EcPayDepositService>(nameof(PaymentProvider.EcPay));
+        services.AddKeyedTransient<IDepositService, EcPayDepositService>(PaymentProvider.EcPay);
 
-        services.AddTransient<Func<PaymentProvider, IDepositService>>(x => key =>
-        {
-            return key switch
-            {
-                PaymentProvider.EcPay => x.GetRequiredKeyedService<IDepositService>(nameof(PaymentProvider.EcPay)),
-                _ => throw new NotSupportedException()
-            };
-        });
+        services.AddTransient<GetDepositService>(x =>
+            paymentProvider => x.GetRequiredKeyedService<IDepositService>(paymentProvider)
+        );
 
         return services;
     }

@@ -6,7 +6,7 @@ namespace Maus.Server.Controllers;
 
 [ApiController]
 [Route("")]
-public class HomeController(Func<PaymentProvider, IDepositService> getDepositService) : Controller
+public class HomeController(GetDepositService getGetDepositService) : Controller
 {
     [HttpGet]
     public IActionResult Index()
@@ -17,7 +17,7 @@ public class HomeController(Func<PaymentProvider, IDepositService> getDepositSer
     [HttpPost]
     public async Task<IActionResult> Submit([FromForm] PaymentTestRequest request)
     {
-        var depositService = getDepositService(request.PaymentProvider);
+        var depositService = getGetDepositService(request.PaymentProvider);
         return await depositService.Deposit(new Transaction
         {
             TransactionNo = request.TransactionNo,
