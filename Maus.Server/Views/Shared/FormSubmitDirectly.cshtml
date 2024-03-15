@@ -13,7 +13,7 @@
 <form action="@Model.ActionUrl" method="post">
     @foreach (var input in Model.NameValues)
     {
-        <input type="hidden" name="@input.Key" value="@input.Value"/>
+        <input type="hidden" name="@input.Key" value="@input.Value" tabindex="-1"/>
     }
 </form>
 
