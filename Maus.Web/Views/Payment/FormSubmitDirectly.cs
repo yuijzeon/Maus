@@ -1,4 +1,4 @@
-﻿namespace Maus.Web.Views.Shared;
+﻿namespace Maus.Web.Views.Payment;
 
 public class FormSubmitDirectly
 {

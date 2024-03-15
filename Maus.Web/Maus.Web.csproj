@@ -15,14 +15,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Shared\FormSubmitDirectly.cs">
-      <DependentUpon>FormSubmitDirectly.cshtml</DependentUpon>
-    </Compile>
+    <ProjectReference Include="..\Maus.Domain\Maus.Domain.csproj" />
+    <ProjectReference Include="..\Maus.Infrastructure\Maus.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Maus.Domain\Maus.Domain.csproj" />
-    <ProjectReference Include="..\Maus.Infrastructure\Maus.Infrastructure.csproj" />
+    <Compile Update="Views\Payment\FormSubmitDirectly.cs">
+      <DependentUpon>FormSubmitDirectly.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

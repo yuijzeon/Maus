@@ -1,6 +1,6 @@
 ﻿using Maus.Domain.Payment.Core;
 using Maus.Web.Models;
-using Maus.Web.Views.Shared;
+using Maus.Web.Views.Payment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maus.Web.Controllers;
