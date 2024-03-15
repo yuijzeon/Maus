@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Maus.Server\Maus.Server.csproj" />
+    <ProjectReference Include="..\Maus.Web\Maus.Web.csproj" />
   </ItemGroup>
 
 </Project>

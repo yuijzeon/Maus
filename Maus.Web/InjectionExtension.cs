@@ -4,7 +4,7 @@ using Maus.Domain.Payment.EcPay;
 using Maus.Domain.Payment.EcPay.Interfaces;
 using Maus.Infrastructure.Payment;
 
-namespace Maus.Server;
+namespace Maus.Web;
 
 public delegate IDepositService GetDepositService(PaymentProvider serviceProvider);
 

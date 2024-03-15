@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Maus.Server.Controllers
+namespace Maus.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]

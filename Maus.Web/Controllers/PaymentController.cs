@@ -1,9 +1,9 @@
 ﻿using Maus.Domain.Payment.Core;
-using Maus.Server.Models;
-using Maus.Server.Views.Shared;
+using Maus.Web.Models;
+using Maus.Web.Views.Shared;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Maus.Server.Controllers;
+namespace Maus.Web.Controllers;
 
 [ApiController]
 [Route("payment")]

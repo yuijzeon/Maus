@@ -1,4 +1,4 @@
-using Maus.Server;
+using Maus.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 

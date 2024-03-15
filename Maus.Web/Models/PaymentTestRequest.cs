@@ -1,6 +1,6 @@
 ﻿using Maus.Domain.Payment.Core;
 
-namespace Maus.Server.Models;
+namespace Maus.Web.Models;
 
 public class PaymentTestRequest
 {

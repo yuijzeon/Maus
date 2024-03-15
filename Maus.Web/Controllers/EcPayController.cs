@@ -3,7 +3,7 @@ using Maus.Domain.Payment.EcPay.Interfaces;
 using Maus.Domain.Payment.EcPay.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Maus.Server.Controllers;
+namespace Maus.Web.Controllers;
 
 [ApiController]
 [Route("ec-pay")]
