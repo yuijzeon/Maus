@@ -1,7 +1,8 @@
-﻿using Maus.Server.Payment.EcPay.Utils;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json.Serialization;
+using Maus.Domain.Payment.Core;
+using Maus.Domain.Payment.EcPay.Utils;
 
-namespace Maus.Server.Payment.EcPay.Models;
+namespace Maus.Domain.Payment.EcPay.Models;
 
 public class EcPayQueryRequest
 {
@@ -13,18 +14,18 @@ public class EcPayQueryRequest
         CheckMacValue = EcPayHelper.GenerateSignature(this, paymentChannel.MerchantKey, paymentChannel.MerchantIv);
     }
 
-    [BindProperty(Name = "MerchantID")]
-    public string MerchantId { get; set; }
+    [JsonPropertyName("MerchantID")]
+    public string? MerchantId { get; set; }
 
-    [BindProperty(Name = "MerchantTradeNo")]
+    [JsonPropertyName("MerchantTradeNo")]
     public string MerchantTradeNo { get; set; }
 
-    [BindProperty(Name = "TimeStamp")]
+    [JsonPropertyName("TimeStamp")]
     public long TimeStamp { get; set; }
 
-    [BindProperty(Name = "CheckMacValue")]
+    [JsonPropertyName("CheckMacValue")]
     public string CheckMacValue { get; set; }
 
-    [BindProperty(Name = "PlatformID")]
-    public string PlatformId { get; set; }
+    [JsonPropertyName("PlatformID")]
+    public string? PlatformId { get; set; }
 }

@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maus.Server", "Maus.Server\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maus.Test", "Maus.Test\Maus.Test.csproj", "{15B9D3C0-F92E-4672-A377-234CEC973163}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maus.Domain", "Maus.Domain\Maus.Domain.csproj", "{B316F94F-3397-44A5-BC29-D364815F560B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maus.Infrastructure", "Maus.Infrastructure\Maus.Infrastructure.csproj", "{EEE4CEFA-E6D7-4067-83D8-2718F0676203}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{15B9D3C0-F92E-4672-A377-234CEC973163}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15B9D3C0-F92E-4672-A377-234CEC973163}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15B9D3C0-F92E-4672-A377-234CEC973163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B316F94F-3397-44A5-BC29-D364815F560B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B316F94F-3397-44A5-BC29-D364815F560B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B316F94F-3397-44A5-BC29-D364815F560B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B316F94F-3397-44A5-BC29-D364815F560B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE4CEFA-E6D7-4067-83D8-2718F0676203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE4CEFA-E6D7-4067-83D8-2718F0676203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE4CEFA-E6D7-4067-83D8-2718F0676203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE4CEFA-E6D7-4067-83D8-2718F0676203}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

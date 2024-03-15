@@ -1,7 +1,7 @@
 ﻿using System.Web;
-using Maus.Server.Extensions;
+using Maus.Domain.Extensions;
 
-namespace Maus.Server.Payment.EcPay.Utils;
+namespace Maus.Domain.Payment.EcPay.Utils;
 
 public static class EcPayHelper
 {

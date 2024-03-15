@@ -1,12 +1,12 @@
-﻿using Maus.Server.Payment;
+﻿using Maus.Domain.Payment.Core;
 
-namespace Maus.Server.Repositories;
+namespace Maus.Infrastructure.Payment;
 
-public class PaymentChanelRepository : IPaymentChanelRepository
+public class PaymentRepository : IPaymentRepository
 {
-    public PaymentChannel GetPaymentChannel(PaymentProvider ecPay)
+    public PaymentChannel GetPaymentChannel(PaymentProvider paymentProvider)
     {
-        if (ecPay == PaymentProvider.EcPay)
+        if (paymentProvider == PaymentProvider.EcPay)
         {
             return new PaymentChannel
             {
@@ -20,6 +20,6 @@ public class PaymentChanelRepository : IPaymentChanelRepository
             };
         }
 
-        return null;
+        throw new NotImplementedException();
     }
 }

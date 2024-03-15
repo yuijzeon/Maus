@@ -1,64 +1,69 @@
-﻿using Maus.Server.Payment.EcPay.Utils;
+﻿using Maus.Domain.Payment.Core;
+using Maus.Domain.Payment.EcPay.Utils;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Maus.Server.Payment.EcPay.Models;
+namespace Maus.Domain.Payment.EcPay.Models;
 
 public class EcPayDepositCallback
 {
     [BindProperty(Name = "MerchantID")]
-    public string MerchantId { get; set; }
+    public string? MerchantId { get; set; }
 
     [BindProperty(Name = "MerchantTradeNo")]
-    public string MerchantTradeNo { get; set; }
+    public string MerchantTradeNo { get; set; } = null!;
 
     [BindProperty(Name = "StoreID")]
-    public string StoreId { get; set; }
+    public string? StoreId { get; set; }
 
     [BindProperty(Name = "RtnCode")]
     public int RtnCode { get; set; }
 
     [BindProperty(Name = "RtnMsg")]
-    public string RtnMsg { get; set; }
+    public string? RtnMsg { get; set; }
 
     [BindProperty(Name = "TradeNo")]
-    public string TradeNo { get; set; }
+    public string? TradeNo { get; set; }
 
     [BindProperty(Name = "TradeAmt")]
     public int TradeAmt { get; set; }
 
     [BindProperty(Name = "PaymentDate")]
-    public string PaymentDate { get; set; }
+    public string? PaymentDate { get; set; }
 
     [BindProperty(Name = "PaymentType")]
-    public string PaymentType { get; set; }
+    public string? PaymentType { get; set; }
 
     [BindProperty(Name = "PaymentTypeChargeFee")]
     public int PaymentTypeChargeFee { get; set; }
 
     [BindProperty(Name = "TradeDate")]
-    public string TradeDate { get; set; }
+    public string? TradeDate { get; set; }
 
     [BindProperty(Name = "SimulatePaid")]
     public int SimulatePaid { get; set; }
 
     [BindProperty(Name = "CustomField1")]
-    public string CustomField1 { get; set; }
+    public string? CustomField1 { get; set; }
 
     [BindProperty(Name = "CustomField2")]
-    public string CustomField2 { get; set; }
+    public string? CustomField2 { get; set; }
 
     [BindProperty(Name = "CustomField3")]
-    public string CustomField3 { get; set; }
+    public string? CustomField3 { get; set; }
 
     [BindProperty(Name = "CustomField4")]
-    public string CustomField4 { get; set; }
+    public string? CustomField4 { get; set; }
 
     [BindProperty(Name = "CheckMacValue")]
-    public string CheckMacValue { get; set; }
+    public string? CheckMacValue { get; set; }
 
     public void CheckSignature(string hashKey, string hashIv)
     {
         var checkMacValue = EcPayHelper.GenerateSignature(this, hashKey, hashIv);
-        if (checkMacValue != CheckMacValue) throw new Exception("Invalid signature");
+
+        if (checkMacValue != CheckMacValue)
+        {
+            throw new PaymentException("Invalid signature");
+        }
     }
 }

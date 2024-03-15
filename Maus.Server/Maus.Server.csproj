@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <UserSecretsId>329ccef6-94fc-42cf-b673-14dcefaa8a2c</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
@@ -17,6 +18,11 @@
     <Compile Update="Views\Shared\FormSubmitDirectly.cs">
       <DependentUpon>FormSubmitDirectly.cshtml</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Maus.Domain\Maus.Domain.csproj" />
+    <ProjectReference Include="..\Maus.Infrastructure\Maus.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
