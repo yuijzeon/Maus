@@ -13,13 +13,17 @@ public class EcPayDepositService(IPaymentRepository paymentRepository, IEcPayPro
 
         var response = await ecPayProxy.Query(transaction.TransactionNo, channel);
 
-        var request = new EcPayDepositRequest(channel, transaction);
+        if (response.AlreadyCreated())
+        {
+            throw new PaymentException("Transaction already created");
+        }
+
+        var request = new EcPayDepositRequest(transaction, channel);
 
         return new FormSubmitResult
         {
             ActionUrl = channel.SubmitUrl,
-            FormData = request.ToStringDictionary(),
-            Type = PaymentResultType.FormSubmit,
+            FormData = request.ToStringDictionary()
         };
     }
 }

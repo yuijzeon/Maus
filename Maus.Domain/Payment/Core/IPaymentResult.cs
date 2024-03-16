@@ -2,5 +2,5 @@
 
 public interface IPaymentResult
 {
-    PaymentResultType Type { get; set; }
+    PaymentResultType Type { get; }
 }

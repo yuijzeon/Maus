@@ -25,15 +25,21 @@ public class PaymentController(GetDepositService getDepositService) : Controller
             TransactionNo = request.TransactionNo,
             ProviderCode = request.ProviderCode,
             RequestAmount = request.RequestAmount,
-            CreatedDate = DateTimeOffset.Now,
+            CreatedDate = DateTimeOffset.Now
         });
 
         return paymentResult.Type switch
         {
             PaymentResultType.Unknown => View("Index"),
             PaymentResultType.FormSubmit => ViewFormSubmit((FormSubmitResult)paymentResult),
-            _ => throw new NotImplementedException(),
+            PaymentResultType.PlainHtml => ContentHtml((PlainHtmlResult)paymentResult),
+            _ => throw new NotImplementedException()
         };
+    }
+
+    private ContentResult ContentHtml(PlainHtmlResult result)
+    {
+        return Content(result.HtmlString, "text/html");
     }
 
     private ViewResult ViewFormSubmit(FormSubmitResult result)
@@ -41,7 +47,7 @@ public class PaymentController(GetDepositService getDepositService) : Controller
         return View("FormSubmitDirectly", new FormSubmitDirectly
         {
             ActionUrl = result.ActionUrl,
-            NameValues = result.FormData,
+            NameValues = result.FormData
         });
     }
 }

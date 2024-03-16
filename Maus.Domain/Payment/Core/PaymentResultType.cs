@@ -3,5 +3,6 @@
 public enum PaymentResultType
 {
     Unknown = 0,
-    FormSubmit = 1,
+    FormSubmit,
+    PlainHtml,
 }

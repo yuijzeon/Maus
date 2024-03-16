@@ -7,7 +7,7 @@ namespace Maus.Domain.Payment.EcPay.Models;
 
 public class EcPayDepositRequest
 {
-    public EcPayDepositRequest(PaymentChannel channel, PaymentTransaction transaction)
+    public EcPayDepositRequest(PaymentTransaction transaction, PaymentChannel channel)
     {
         MerchantId = channel.ProviderMerchantCode;
         MerchantTradeNo = transaction.TransactionNo;

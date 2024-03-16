@@ -60,4 +60,9 @@ public class EcPayQueryResponse
             throw new PaymentException("Invalid signature");
         }
     }
+
+    public bool AlreadyCreated()
+    {
+        return TradeStatus is not EcPayStatus.UnCreated;
+    }
 }
