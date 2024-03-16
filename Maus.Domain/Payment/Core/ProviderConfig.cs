@@ -4,8 +4,8 @@ public class ProviderConfig
 {
     public ProviderCode ProviderCode { get; set; }
     public MethodCode MethodCode { get; set; }
-    public string ProviderMethodCode { get; set; }
-    public string SubmitUrl { get; set; }
-    public string CallbackUrl { get; set; }
-    public string QueryUrl { get; set; }
+    public BankCode BankCode { get; set; }
+    public string? ProviderMethodCode { get; set; }
+    public string? ProviderBankCode { get; set; }
+    public UrlConfig UrlConfig { get; set; }
 }

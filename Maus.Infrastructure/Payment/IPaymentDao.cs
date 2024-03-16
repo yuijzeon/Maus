@@ -4,6 +4,6 @@ namespace Maus.Infrastructure.Payment;
 
 public interface IPaymentDao
 {
-    Task<ProviderConfig> GetProviderConfig(ProviderCode providerCode, MethodCode methodCode);
-    Task<MerchantProviderConfig> GetMerchantConfig(ProviderCode providerCode, MethodCode methodCode);
+    Task<ProviderConfig> GetProviderConfig(ProviderCode providerCode, MethodCode methodCode, BankCode bankCode);
+    Task<MerchantProviderConfig> GetMerchantConfig(ProviderCode providerCode);
 }

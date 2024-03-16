@@ -14,24 +14,42 @@
                name="@(nameof(PaymentTestRequest.ProviderCode))"
                value="EcPay"/>
     </label>
+    <br/>
+    <label>
+        PaymentMethod:
+        <input type="text"
+               name="@(nameof(PaymentTestRequest.MethodCode))"
+               value="Unspecified"/>
+    </label>
+    <br/>
+    <label>
+        BankCode:
+        <input type="text"
+               name="@(nameof(PaymentTestRequest.BankCode))"
+               value="Unspecified"/>
+    </label>
+    <br/>
     <label>
         TransactionNo:
         <input type="text"
                name="@(nameof(PaymentTestRequest.TransactionNo))"
                value="ABBY@(new Random().Next(100000, 1000000))"/>
     </label>
+    <br/>
     <label>
         CreatedDate:
         <input type="datetime-local"
                name="@(nameof(PaymentTestRequest.CreatedDate))"
                value="@(DateTime.UtcNow.ToString("yyyy-MM-ddThh:mm"))"/>
     </label>
+    <br/>
     <label>
         RequestAmount:
         <input type="number"
                name="@(nameof(PaymentTestRequest.RequestAmount))"
                value="@(new Random().Next(100, 10000))"/>
     </label>
+    <br/>
     <input type="submit" value="submit"/>
 </form>
 </body>

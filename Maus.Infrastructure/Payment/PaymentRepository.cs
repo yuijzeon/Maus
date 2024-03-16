@@ -5,22 +5,23 @@ namespace Maus.Infrastructure.Payment;
 public class PaymentRepository(IPaymentDao paymentDao) : IPaymentRepository
 {
     public async Task<PaymentChannel> GetPaymentChannel(ProviderCode providerCode,
-        MethodCode methodCode = MethodCode.Unspecified)
+        MethodCode methodCode = MethodCode.Unspecified, BankCode bankCode = BankCode.Unspecified)
     {
-        var providerConfig = await paymentDao.GetProviderConfig(providerCode, methodCode);
-        var merchantConfig = await paymentDao.GetMerchantConfig(providerCode, methodCode);
+        var merchantConfig = await paymentDao.GetMerchantConfig(providerCode);
+        var providerConfig = await paymentDao.GetProviderConfig(providerCode, methodCode, bankCode);
 
         return new PaymentChannel
         {
-            ProviderCode = providerCode,
-            MethodCode = methodCode,
-            ProviderMethodCode = providerConfig.ProviderMethodCode,
             ProviderMerchantCode = merchantConfig.ProviderMerchantCode,
             HashKey = merchantConfig.ProviderMerchantKey,
             HashIv = merchantConfig.ProviderMerchantIv,
-            SubmitUrl = providerConfig.SubmitUrl,
-            QueryUrl = providerConfig.QueryUrl,
-            CallbackUrl = providerConfig.CallbackUrl,
+            ProviderCode = providerCode,
+            MethodCode = methodCode,
+            ProviderBankCode = providerConfig.ProviderBankCode,
+            ProviderMethodCode = providerConfig.ProviderMethodCode,
+            SubmitUrl = providerConfig.UrlConfig.SubmitUrl,
+            QueryUrl = providerConfig.UrlConfig.QueryUrl,
+            CallbackUrl = providerConfig.UrlConfig.CallbackUrl
         };
     }
 }

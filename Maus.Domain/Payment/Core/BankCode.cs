@@ -1,7 +1,8 @@
 ﻿namespace Maus.Domain.Payment.Core;
 
-public enum MethodCode
+public enum BankCode
 {
     Unspecified = 0,
-    CreditCard,
+    UnionPay,
+    UnionPayWithout,
 }

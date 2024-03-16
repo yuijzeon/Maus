@@ -19,6 +19,7 @@ public class EcPayDepositRequest
         ReturnUrl = channel.CallbackUrl;
         ChoosePayment = channel.ProviderMethodCode;
         EncryptType = 1;
+        SetCreditCardDetail(transaction, channel);
         CheckMacValue = EcPayHelper.GenerateSignature(this.ToStringDictionary(), channel.HashKey, channel.HashIv);
     }
 
@@ -54,4 +55,15 @@ public class EcPayDepositRequest
 
     [JsonPropertyName("EncryptType")]
     public int EncryptType { get; private set; }
+
+    [JsonPropertyName("UnionPay")]
+    public int? UnionPay { get; set; }
+
+    private void SetCreditCardDetail(PaymentTransaction transaction, PaymentChannel channel)
+    {
+        if (transaction.MethodCode is MethodCode.CreditCard)
+        {
+            UnionPay = channel.ProviderBankCode.ParseOrNull<int>();
+        }
+    }
 }
