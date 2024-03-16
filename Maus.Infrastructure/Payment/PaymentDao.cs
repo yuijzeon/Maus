@@ -4,7 +4,7 @@ namespace Maus.Infrastructure.Payment;
 
 public class PaymentDao : IPaymentDao
 {
-    public Task<ProviderConfig> GetProviderConfig(ProviderCode providerCode, MethodCode methodCode, SubMethodCode subMethodCode)
+    public Task<ProviderConfig> GetProviderConfig(PaymentUnit paymentUnit)
     {
         var ecPayUrlConfig = new UrlConfig
         {
@@ -136,26 +136,28 @@ public class PaymentDao : IPaymentDao
                     UrlConfig = ecPayUrlConfig
                 }
             ])
-            .Where(x => x.ProviderCode == providerCode)
-            .Where(x => x.MethodCode == methodCode)
-            .Where(x => x.SubMethodCode == subMethodCode)
+            .Where(x => x.ProviderCode == paymentUnit.ProviderCode)
+            .Where(x => x.MethodCode == paymentUnit.MethodCode)
+            .Where(x => x.SubMethodCode == paymentUnit.SubMethodCode)
             .Single();
 
         return Task.FromResult(providerConfig);
     }
 
-    public Task<MerchantProviderConfig> GetMerchantConfig(ProviderCode providerCode)
+    public Task<MerchantProviderConfig> GetMerchantConfig(string merchantCode, ProviderCode providerCode)
     {
         var merchantConfig = ((List<MerchantProviderConfig>)
             [
                 new MerchantProviderConfig
                 {
+                    MerchantCode = merchantCode,
                     ProviderCode = ProviderCode.EcPay,
                     ProviderMerchantCode = "3002607",
                     ProviderMerchantKey = "pwFHCqoQZGmho4w6",
                     ProviderMerchantIv = "EkRm7iFT261dpevs"
                 }
             ])
+            .Where(x => x.MerchantCode == merchantCode)
             .Where(x => x.ProviderCode == providerCode)
             .Single();
 

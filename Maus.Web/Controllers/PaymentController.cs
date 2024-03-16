@@ -22,12 +22,13 @@ public class PaymentController(GetDepositService getDepositService) : Controller
 
         var paymentResult = await depositService.Deposit(new PaymentTransaction
         {
-            TransactionNo = request.TransactionNo,
+            MerchantCode = "TEST",
+            MerchantTransactionNo = request.TransactionNo,
             ProviderCode = request.ProviderCode,
             MethodCode = request.MethodCode,
             SubMethodCode = request.SubMethodCode,
             RequestAmount = request.RequestAmount,
-            CreatedDate = DateTimeOffset.Now
+            CreatedDate = DateTimeOffset.Now,
         });
 
         return paymentResult.Type switch

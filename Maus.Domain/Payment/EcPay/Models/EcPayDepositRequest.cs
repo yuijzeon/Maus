@@ -10,7 +10,7 @@ public class EcPayDepositRequest
     public EcPayDepositRequest(PaymentTransaction transaction, PaymentChannel channel)
     {
         MerchantId = channel.ProviderMerchantCode;
-        MerchantTradeNo = transaction.TransactionNo;
+        MerchantTradeNo = transaction.MerchantTransactionNo;
         MerchantTradeDate = transaction.CreatedDate.ToString("yyyy/MM/dd HH:mm:ss");
         PaymentType = "aio";
         TotalAmount = (int)transaction.RequestAmount;
