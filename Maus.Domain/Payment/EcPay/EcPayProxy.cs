@@ -7,15 +7,14 @@ namespace Maus.Domain.Payment.EcPay;
 
 public class EcPayProxy(HttpClient httpClient) : IEcPayProxy
 {
-    public async Task<EcPayQueryResponse> Query(string transactionNo, PaymentChannel paymentChannel)
+    public async Task<EcPayQueryResponse> Query(string transactionNo, PaymentChannel channel)
     {
-        var request = new EcPayQueryRequest(transactionNo, paymentChannel);
+        var request = new EcPayQueryRequest(transactionNo, channel);
         var content = new FormUrlEncodedContent(request.ToStringDictionary());
-        var responseMessage = await httpClient.PostAsync(paymentChannel.QueryUrl, content);
+        var responseMessage = await httpClient.PostAsync(channel.QueryUrl, content);
         responseMessage.EnsureSuccessStatusCode();
         var queryString = await responseMessage.Content.ReadAsStringAsync();
-        var response = new EcPayQueryResponse(queryString);
-        response.CheckSignature(paymentChannel.MerchantKey, paymentChannel.MerchantIv);
+        var response = new EcPayQueryResponse(queryString, channel);
         return response;
     }
 }

@@ -5,5 +5,5 @@ namespace Maus.Domain.Payment.EcPay.Interfaces;
 
 public interface IEcPayProxy
 {
-    Task<EcPayQueryResponse> Query(string transactionNo, PaymentChannel paymentChannel);
+    Task<EcPayQueryResponse> Query(string transactionNo, PaymentChannel channel);
 }

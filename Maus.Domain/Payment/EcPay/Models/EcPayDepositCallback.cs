@@ -1,4 +1,5 @@
-﻿using Maus.Domain.Payment.Core;
+﻿using Maus.Domain.Extensions;
+using Maus.Domain.Payment.Core;
 using Maus.Domain.Payment.EcPay.Utils;
 using Microsoft.AspNetCore.Mvc;
 
@@ -59,7 +60,7 @@ public class EcPayDepositCallback
 
     public void CheckSignature(string hashKey, string hashIv)
     {
-        var checkMacValue = EcPayHelper.GenerateSignature(this, hashKey, hashIv);
+        var checkMacValue = EcPayHelper.GenerateSignature(this.ToStringDictionary(), hashKey, hashIv);
 
         if (checkMacValue != CheckMacValue)
         {

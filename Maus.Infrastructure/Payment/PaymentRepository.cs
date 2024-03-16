@@ -14,9 +14,10 @@ public class PaymentRepository(IPaymentDao paymentDao) : IPaymentRepository
         {
             ProviderCode = providerCode,
             MethodCode = methodCode,
-            MerchantCode = merchantConfig.ProviderMerchantCode,
-            MerchantKey = merchantConfig.ProviderMerchantKey,
-            MerchantIv = merchantConfig.ProviderMerchantIv,
+            ProviderMethodCode = providerConfig.ProviderMethodCode,
+            ProviderMerchantCode = merchantConfig.ProviderMerchantCode,
+            HashKey = merchantConfig.ProviderMerchantKey,
+            HashIv = merchantConfig.ProviderMerchantIv,
             SubmitUrl = providerConfig.SubmitUrl,
             QueryUrl = providerConfig.QueryUrl,
             CallbackUrl = providerConfig.CallbackUrl,

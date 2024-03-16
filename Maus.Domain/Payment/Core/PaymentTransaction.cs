@@ -7,4 +7,5 @@ public class PaymentTransaction
     public decimal RequestAmount { get; set; }
     public DateTimeOffset CreatedDate { get; set; }
     public string? ItemName { get; set; }
+    public string? Remark { get; set; }
 }

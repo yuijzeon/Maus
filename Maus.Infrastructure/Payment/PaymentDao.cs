@@ -12,6 +12,7 @@ public class PaymentDao : IPaymentDao
                 {
                     ProviderCode = ProviderCode.EcPay,
                     MethodCode = MethodCode.Unspecified,
+                    ProviderMethodCode = "ALL",
                     SubmitUrl = "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5",
                     CallbackUrl = "https://243c-1-200-146-209.ngrok-free.app/ec-pay/callback",
                     QueryUrl = "https://payment-stage.ecpay.com.tw/Cashier/QueryTradeInfo/V5",

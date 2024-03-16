@@ -9,15 +9,15 @@ public class EcPayDepositService(IPaymentRepository paymentRepository, IEcPayPro
 {
     public async Task<IPaymentResult> Deposit(PaymentTransaction transaction)
     {
-        var paymentChannel = await paymentRepository.GetPaymentChannel(ProviderCode.EcPay);
+        var channel = await paymentRepository.GetPaymentChannel(ProviderCode.EcPay);
 
-        var response = await ecPayProxy.Query(transaction.TransactionNo, paymentChannel);
+        var response = await ecPayProxy.Query(transaction.TransactionNo, channel);
 
-        var request = new EcPayDepositRequest(paymentChannel, transaction);
+        var request = new EcPayDepositRequest(channel, transaction);
 
         return new FormSubmitResult
         {
-            ActionUrl = paymentChannel.SubmitUrl,
+            ActionUrl = channel.SubmitUrl,
             FormData = request.ToStringDictionary(),
             Type = PaymentResultType.FormSubmit,
         };

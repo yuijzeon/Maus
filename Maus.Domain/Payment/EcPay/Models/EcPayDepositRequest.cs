@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Maus.Domain.Extensions;
 using Maus.Domain.Payment.Core;
 using Maus.Domain.Payment.EcPay.Utils;
 
@@ -8,17 +9,17 @@ public class EcPayDepositRequest
 {
     public EcPayDepositRequest(PaymentChannel channel, PaymentTransaction transaction)
     {
-        MerchantId = channel.MerchantCode;
+        MerchantId = channel.ProviderMerchantCode;
         MerchantTradeNo = transaction.TransactionNo;
         MerchantTradeDate = transaction.CreatedDate.ToString("yyyy/MM/dd HH:mm:ss");
         PaymentType = "aio";
         TotalAmount = (int)transaction.RequestAmount;
-        TradeDesc = "交易描述";
+        TradeDesc = transaction.Remark ?? "-";
         ItemName = transaction.ItemName ?? "-";
         ReturnUrl = channel.CallbackUrl;
-        ChoosePayment = "ALL";
+        ChoosePayment = channel.ProviderMethodCode;
         EncryptType = 1;
-        CheckMacValue = EcPayHelper.GenerateSignature(this, channel.MerchantKey, channel.MerchantIv);
+        CheckMacValue = EcPayHelper.GenerateSignature(this.ToStringDictionary(), channel.HashKey, channel.HashIv);
     }
 
     [JsonPropertyName("MerchantID")]

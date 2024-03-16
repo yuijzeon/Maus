@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Collections.Specialized;
+using System.Web;
 using Maus.Domain.Extensions;
 using Maus.Domain.Payment.Core;
 using Maus.Domain.Payment.EcPay.Enums;
@@ -8,51 +9,53 @@ namespace Maus.Domain.Payment.EcPay.Models;
 
 public class EcPayQueryResponse
 {
-    public EcPayQueryResponse(string queryString)
+    public EcPayQueryResponse(string queryString, PaymentChannel channel)
     {
         var collection = HttpUtility.ParseQueryString(queryString);
-        MerchantId = collection["MerchantID"];
-        MerchantTradeNo = collection["MerchantTradeNo"];
-        StoreId = collection["StoreID"];
-        TradeNo = collection["TradeNo"];
-        TradeAmt = collection["TradeAmt"].ParseOrDefault<int>();
-        PaymentDate = collection["PaymentDate"].ParseOrDefault<DateTime>();
-        PaymentType = collection["PaymentType"];
-        HandlingCharge = collection["HandlingCharge"].ParseOrDefault<int>();
-        PaymentTypeChargeFee = collection["PaymentTypeChargeFee"].ParseOrDefault<int>();
-        TradeDate = collection["TradeDate"].ParseOrDefault<DateTime>();
-        TradeStatus = collection["TradeStatus"].ToEnumOrDefault<EcPayStatus>();
-        ItemName = collection["ItemName"];
-        CustomField1 = collection["CustomField1"];
-        CustomField2 = collection["CustomField2"];
-        CustomField3 = collection["CustomField3"];
-        CustomField4 = collection["CustomField4"];
-        CheckMacValue = collection["CheckMacValue"];
+        CheckSignature(collection, channel);
+        MerchantId = collection.Get("MerchantID");
+        MerchantTradeNo = collection.Get("MerchantTradeNo");
+        StoreId = collection.Get("StoreID");
+        TradeNo = collection.Get("TradeNo");
+        TradeAmt = collection.Get("TradeAmt").ParseOrDefault<int>();
+        PaymentDate = collection.Get("PaymentDate").ParseOrDefault<DateTime>();
+        PaymentType = collection.Get("PaymentType");
+        HandlingCharge = collection.Get("HandlingCharge").ParseOrDefault<int>();
+        PaymentTypeChargeFee = collection.Get("PaymentTypeChargeFee").ParseOrDefault<int>();
+        TradeDate = collection.Get("TradeDate").ParseOrDefault<DateTime>();
+        TradeStatus = collection.Get("TradeStatus").ToEnumOrDefault<EcPayStatus>();
+        ItemName = collection.Get("ItemName");
+        CustomField1 = collection.Get("CustomField1");
+        CustomField2 = collection.Get("CustomField2");
+        CustomField3 = collection.Get("CustomField3");
+        CustomField4 = collection.Get("CustomField4");
+        CheckMacValue = collection.Get("CheckMacValue");
     }
 
-    public string? MerchantId { get; private set; }
-    public string? MerchantTradeNo { get; private set; }
-    public string? StoreId { get; private set; }
-    public string? TradeNo { get; private set; }
-    public int? TradeAmt { get; private set; }
-    public DateTime PaymentDate { get; private set; }
-    public string? PaymentType { get; private set; }
-    public int HandlingCharge { get; private set; }
-    public int PaymentTypeChargeFee { get; private set; }
-    public DateTime TradeDate { get; private set; }
-    public EcPayStatus TradeStatus { get; private set; }
-    public string? ItemName { get; private set; }
-    public string? CustomField1 { get; private set; }
-    public string? CustomField2 { get; private set; }
-    public string? CustomField3 { get; private set; }
-    public string? CustomField4 { get; private set; }
+    public string? MerchantId { get; }
+    public string? MerchantTradeNo { get; }
+    public string? StoreId { get; }
+    public string? TradeNo { get; }
+    public int TradeAmt { get; }
+    public DateTime PaymentDate { get; }
+    public string? PaymentType { get; }
+    public int HandlingCharge { get; }
+    public int PaymentTypeChargeFee { get; }
+    public DateTime TradeDate { get; }
+    public EcPayStatus TradeStatus { get; }
+    public string? ItemName { get; }
+    public string? CustomField1 { get; }
+    public string? CustomField2 { get; }
+    public string? CustomField3 { get; }
+    public string? CustomField4 { get; }
     public string? CheckMacValue { get; }
 
-    public void CheckSignature(string hashKey, string hashIv)
+    private void CheckSignature(NameValueCollection collection, PaymentChannel channel)
     {
-        var signature = EcPayHelper.GenerateSignature(this, hashKey, hashIv);
+        var keyValuePairs = collection.ToKeyValuePairs();
+        var signature = EcPayHelper.GenerateSignature(keyValuePairs, channel.HashKey, channel.HashIv);
 
-        if (signature != CheckMacValue)
+        if (signature != collection.Get("CheckMacValue"))
         {
             throw new PaymentException("Invalid signature");
         }

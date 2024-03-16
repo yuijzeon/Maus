@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Maus.Domain.Extensions;
 using Maus.Domain.Payment.Core;
 using Maus.Domain.Payment.EcPay.Utils;
 
@@ -6,12 +7,12 @@ namespace Maus.Domain.Payment.EcPay.Models;
 
 public class EcPayQueryRequest
 {
-    public EcPayQueryRequest(string transactionNo, PaymentChannel paymentChannel)
+    public EcPayQueryRequest(string transactionNo, PaymentChannel channel)
     {
-        MerchantId = paymentChannel.MerchantCode;
+        MerchantId = channel.ProviderMerchantCode;
         MerchantTradeNo = transactionNo;
         TimeStamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        CheckMacValue = EcPayHelper.GenerateSignature(this, paymentChannel.MerchantKey, paymentChannel.MerchantIv);
+        CheckMacValue = EcPayHelper.GenerateSignature(this.ToStringDictionary(), channel.HashKey, channel.HashIv);
     }
 
     [JsonPropertyName("MerchantID")]

@@ -5,18 +5,16 @@ namespace Maus.Domain.Payment.EcPay.Utils;
 
 public static class EcPayHelper
 {
-    public static string GenerateSignature(object obj, string hashKey, string hashIv)
+    public static string GenerateSignature(IEnumerable<KeyValuePair<string, string>> keyValuePairs, string hashKey, string hashIv)
     {
-        var keyValuePairs = ((List<KeyValuePair<string, string>>)
+        var preSignature = string.Join("&", ((List<KeyValuePair<string, string>>)
         [
             new KeyValuePair<string, string>("HashKey", hashKey),
-            ..obj.ToStringDictionary()
+            ..keyValuePairs
                 .Where(x => x.Key != "CheckMacValue")
                 .OrderBy(x => x.Key),
             new KeyValuePair<string, string>("HashIV", hashIv)
-        ]).Select(x => $"{x.Key}={x.Value}");
-
-        var preSignature = string.Join("&", keyValuePairs);
+        ]).Select(x => $"{x.Key}={x.Value}"));
 
         return HttpUtility.UrlEncode(preSignature).ToLower().ToSha256String().ToUpper();
     }
