@@ -24,33 +24,108 @@ public class PaymentDao : IPaymentDao
                     ProviderBankCode = null,
                     UrlConfig = ecPayUrlConfig
                 },
-                new ProviderConfig
+                ..((List<(BankCode key, string value)>)
+                [
+                    (BankCode.Unspecified, "0"),
+                    (BankCode.UnionPay, "1"),
+                    (BankCode.UnionPayWithout, "2")
+                ]).Select(x => new ProviderConfig
                 {
                     ProviderCode = ProviderCode.EcPay,
                     MethodCode = MethodCode.CreditCard,
+                    BankCode = x.key,
+                    ProviderMethodCode = "Credit",
+                    ProviderBankCode = x.value,
+                    UrlConfig = ecPayUrlConfig
+                }).ToList(),
+                new ProviderConfig
+                {
+                    ProviderCode = ProviderCode.EcPay,
+                    MethodCode = MethodCode.EWallet,
+                    BankCode = BankCode.ApplePay,
+                    ProviderMethodCode = "ApplePay",
+                    ProviderBankCode = null,
+                    UrlConfig = ecPayUrlConfig
+                },
+                ..((List<(BankCode key, string value)>)
+                [
+                    (BankCode.Unspecified, null),
+                    (BankCode.TSIB, "TAISHIN"),
+                    (BankCode.ESUN, "ESUN"),
+                    (BankCode.BKTW, "BOT"),
+                    (BankCode.TPBK, "FUBON"),
+                    (BankCode.CTCB, "CHINATRUST"),
+                    (BankCode.FCBK, "FIRST"),
+                    (BankCode.LBOT, "LAND"),
+                    (BankCode.UWCB, "CATHAY"),
+                    (BankCode.OURB, "TACHONG"),
+                    (BankCode.BBBK, "PANHSIN")
+                ]).Select(x => new ProviderConfig
+                {
+                    ProviderCode = ProviderCode.EcPay,
+                    MethodCode = MethodCode.BankTransfer,
+                    BankCode = x.key,
+                    ProviderMethodCode = "ATM",
+                    ProviderBankCode = x.value,
+                    UrlConfig = ecPayUrlConfig
+                }).ToList(),
+                ..((List<(BankCode key, string value)>)
+                [
+                    (BankCode.Unspecified, "CVS"),
+                    (BankCode.OkMart, "OK"),
+                    (BankCode.FamilyMart, "FAMILY"),
+                    (BankCode.HiLife, "HILIFE"),
+                    (BankCode.Ibon, "IBON")
+                ]).Select(x => new ProviderConfig
+                {
+                    ProviderCode = ProviderCode.EcPay,
+                    MethodCode = MethodCode.Kiosk,
+                    BankCode = x.key,
+                    ProviderMethodCode = "CVS",
+                    ProviderBankCode = x.value,
+                    UrlConfig = ecPayUrlConfig
+                }).ToList(),
+                new ProviderConfig
+                {
+                    ProviderCode = ProviderCode.EcPay,
+                    MethodCode = MethodCode.Barcode,
                     BankCode = BankCode.Unspecified,
-                    ProviderMethodCode = "Credit",
-                    ProviderBankCode = "0",
+                    ProviderMethodCode = "BARCODE",
+                    ProviderBankCode = "BARCODE",
                     UrlConfig = ecPayUrlConfig
                 },
+                ..((List<(BankCode key, string value)>)
+                [
+                    (BankCode.Unspecified, null),
+                    (BankCode.TSIB, "TAISHIN"),
+                    (BankCode.ESUN, "ESUN"),
+                    (BankCode.BKTW, "BOT"),
+                    (BankCode.TPBK, "FUBON"),
+                    (BankCode.CTCB, "CHINATRUST"),
+                    (BankCode.FCBK, "FIRST"),
+                    (BankCode.UWCB, "CATHAY"),
+                    (BankCode.ICBC, "MEGA"),
+                    (BankCode.LBOT, "LAND"),
+                    (BankCode.OURB, "TACHONG"),
+                    (BankCode.SINO, "SINOPAC")
+                ]).Select(x => new ProviderConfig
+                {
+                    ProviderCode = ProviderCode.EcPay,
+                    MethodCode = MethodCode.InternetBanking,
+                    BankCode = x.key,
+                    ProviderMethodCode = "WebATM",
+                    ProviderBankCode = x.value,
+                    UrlConfig = ecPayUrlConfig
+                }).ToList(),
                 new ProviderConfig
                 {
                     ProviderCode = ProviderCode.EcPay,
-                    MethodCode = MethodCode.CreditCard,
-                    BankCode = BankCode.UnionPay,
-                    ProviderMethodCode = "Credit",
-                    ProviderBankCode = "1",
+                    MethodCode = MethodCode.EWallet,
+                    BankCode = BankCode.TWQR,
+                    ProviderMethodCode = "TWQR",
+                    ProviderBankCode = null,
                     UrlConfig = ecPayUrlConfig
                 },
-                new ProviderConfig
-                {
-                    ProviderCode = ProviderCode.EcPay,
-                    MethodCode = MethodCode.CreditCard,
-                    BankCode = BankCode.UnionPayWithout,
-                    ProviderMethodCode = "Credit",
-                    ProviderBankCode = "2",
-                    UrlConfig = ecPayUrlConfig
-                }
             ])
             .Where(x => x.ProviderCode == providerCode)
             .Where(x => x.MethodCode == methodCode)
