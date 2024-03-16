@@ -7,7 +7,7 @@ namespace Maus.Web.Controllers;
 
 [ApiController]
 [Route("payment")]
-public class PaymentController(GetDepositService getGetDepositService) : Controller
+public class PaymentController(GetDepositService getDepositService) : Controller
 {
     [HttpGet]
     public IActionResult Index()
@@ -18,12 +18,12 @@ public class PaymentController(GetDepositService getGetDepositService) : Control
     [HttpPost]
     public async Task<IActionResult> Submit([FromForm] PaymentTestRequest request)
     {
-        var depositService = getGetDepositService(request.PaymentProvider);
+        var depositService = getDepositService(request.ProviderCode);
 
         var paymentResult = await depositService.Deposit(new PaymentTransaction
         {
             TransactionNo = request.TransactionNo,
-            PaymentProvider = request.PaymentProvider,
+            ProviderCode = request.ProviderCode,
             RequestAmount = request.RequestAmount,
             CreatedDate = DateTimeOffset.Now,
         });

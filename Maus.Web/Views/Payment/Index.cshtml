@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Maus.Web.Models
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7,14 +8,31 @@
 <body>
 
 <form action="@Url.Action("Index")" method="post" autocomplete="on">
-    <label>PaymentProvider:<input type="text" name="PaymentProvider"/></label>
-    <label>TransactionNo:<input type="text" name="TransactionNo"/></label>
-    <label>CreatedDate:<input type="datetime-local" name="CreatedDate"/></label>
-    <label>RequestAmount:<input type="number" name="RequestAmount"/></label>
+    <label>
+        PaymentProvider:
+        <input type="text"
+               name="@(nameof(PaymentTestRequest.ProviderCode))"
+               value="EcPay"/>
+    </label>
+    <label>
+        TransactionNo:
+        <input type="text"
+               name="@(nameof(PaymentTestRequest.TransactionNo))"
+               value="ABBY@(new Random().Next(100000, 1000000))"/>
+    </label>
+    <label>
+        CreatedDate:
+        <input type="datetime-local"
+               name="@(nameof(PaymentTestRequest.CreatedDate))"
+               value="@(DateTime.UtcNow.ToString("yyyy-MM-ddThh:mm"))"/>
+    </label>
+    <label>
+        RequestAmount:
+        <input type="number"
+               name="@(nameof(PaymentTestRequest.RequestAmount))"
+               value="@(new Random().Next(100, 10000))"/>
+    </label>
     <input type="submit" value="submit"/>
 </form>
-
-
-
 </body>
 </html>

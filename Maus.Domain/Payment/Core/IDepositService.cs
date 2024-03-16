@@ -2,5 +2,5 @@
 
 public interface IDepositService
 {
-    Task<IPaymentResult> Deposit(PaymentTransaction paymentTransaction);
+    Task<IPaymentResult> Deposit(PaymentTransaction transaction);
 }

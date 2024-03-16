@@ -2,5 +2,5 @@
 
 public interface IPaymentRepository
 {
-    PaymentChannel GetPaymentChannel(PaymentProvider paymentProvider);
+    Task<PaymentChannel> GetPaymentChannel(ProviderCode providerCode, MethodCode methodCode = MethodCode.Unspecified);
 }

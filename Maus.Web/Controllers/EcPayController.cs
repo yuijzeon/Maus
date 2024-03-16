@@ -12,7 +12,7 @@ public class EcPayController(IEcPayProxy ecPayProxy, IPaymentRepository paymentR
     [HttpPost("callback")]
     public async Task<IActionResult> Callback([FromForm] EcPayDepositCallback request)
     {
-        var paymentChannel = paymentRepository.GetPaymentChannel(PaymentProvider.EcPay);
+        var paymentChannel = await paymentRepository.GetPaymentChannel(ProviderCode.EcPay);
         request.CheckSignature(paymentChannel.MerchantKey, paymentChannel.MerchantIv);
         var query = await ecPayProxy.Query(request.MerchantTradeNo, paymentChannel);
         return Ok("1|OK");

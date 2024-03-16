@@ -6,19 +6,20 @@ using Maus.Infrastructure.Payment;
 
 namespace Maus.Web;
 
-public delegate IDepositService GetDepositService(PaymentProvider serviceProvider);
+public delegate IDepositService GetDepositService(ProviderCode serviceProviderCode);
 
 public static class InjectionExtension
 {
     public static IServiceCollection AddPaymentService(this IServiceCollection services)
     {
+        services.AddTransient<IPaymentDao, PaymentDao>();
         services.AddTransient<IPaymentRepository, PaymentRepository>();
 
         services.AddHttpClient<IEcPayProxy, EcPayProxy>();
-        services.AddKeyedTransient<IDepositService, EcPayDepositService>(PaymentProvider.EcPay);
+        services.AddKeyedTransient<IDepositService, EcPayDepositService>(ProviderCode.EcPay);
 
         services.AddTransient<GetDepositService>(x =>
-            paymentProvider => x.GetRequiredKeyedService<IDepositService>(paymentProvider)
+            providerCode => x.GetRequiredKeyedService<IDepositService>(providerCode)
         );
 
         return services;

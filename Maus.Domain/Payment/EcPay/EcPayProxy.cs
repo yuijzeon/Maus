@@ -1,5 +1,4 @@
-﻿using System.Web;
-using Maus.Domain.Extensions;
+﻿using Maus.Domain.Extensions;
 using Maus.Domain.Payment.Core;
 using Maus.Domain.Payment.EcPay.Interfaces;
 using Maus.Domain.Payment.EcPay.Models;
@@ -15,7 +14,7 @@ public class EcPayProxy(HttpClient httpClient) : IEcPayProxy
         var responseMessage = await httpClient.PostAsync(paymentChannel.QueryUrl, content);
         responseMessage.EnsureSuccessStatusCode();
         var queryString = await responseMessage.Content.ReadAsStringAsync();
-        var response = HttpUtility.ParseQueryString(queryString).ParseJson<EcPayQueryResponse>();
+        var response = new EcPayQueryResponse(queryString);
         response.CheckSignature(paymentChannel.MerchantKey, paymentChannel.MerchantIv);
         return response;
     }

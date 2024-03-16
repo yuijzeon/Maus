@@ -6,19 +6,19 @@ namespace Maus.Domain.Payment.EcPay.Models;
 
 public class EcPayDepositRequest
 {
-    public EcPayDepositRequest(PaymentChannel paymentChannel, PaymentTransaction paymentTransaction)
+    public EcPayDepositRequest(PaymentChannel channel, PaymentTransaction transaction)
     {
-        MerchantId = paymentChannel.MerchantCode;
-        MerchantTradeNo = paymentTransaction.TransactionNo;
-        MerchantTradeDate = paymentTransaction.CreatedDate.ToString("yyyy/MM/dd HH:mm:ss");
+        MerchantId = channel.MerchantCode;
+        MerchantTradeNo = transaction.TransactionNo;
+        MerchantTradeDate = transaction.CreatedDate.ToString("yyyy/MM/dd HH:mm:ss");
         PaymentType = "aio";
-        TotalAmount = (int)paymentTransaction.RequestAmount;
+        TotalAmount = (int)transaction.RequestAmount;
         TradeDesc = "交易描述";
-        ItemName = "testing";
-        ReturnUrl = paymentChannel.CallbackUrl;
+        ItemName = transaction.ItemName ?? "-";
+        ReturnUrl = channel.CallbackUrl;
         ChoosePayment = "ALL";
         EncryptType = 1;
-        CheckMacValue = EcPayHelper.GenerateSignature(this, paymentChannel.MerchantKey, paymentChannel.MerchantIv);
+        CheckMacValue = EcPayHelper.GenerateSignature(this, channel.MerchantKey, channel.MerchantIv);
     }
 
     [JsonPropertyName("MerchantID")]
