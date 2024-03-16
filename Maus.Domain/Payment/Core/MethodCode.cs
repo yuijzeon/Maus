@@ -9,4 +9,5 @@ public enum MethodCode
     EWallet,
     InternetBanking,
     Kiosk,
+    PayLater,
 }

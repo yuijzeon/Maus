@@ -126,6 +126,15 @@ public class PaymentDao : IPaymentDao
                     ProviderBankCode = null,
                     UrlConfig = ecPayUrlConfig
                 },
+                new ProviderConfig
+                {
+                    ProviderCode = ProviderCode.EcPay,
+                    MethodCode = MethodCode.PayLater,
+                    BankCode = BankCode.Unspecified,
+                    ProviderMethodCode = "BNPL",
+                    ProviderBankCode = null,
+                    UrlConfig = ecPayUrlConfig
+                }
             ])
             .Where(x => x.ProviderCode == providerCode)
             .Where(x => x.MethodCode == methodCode)
