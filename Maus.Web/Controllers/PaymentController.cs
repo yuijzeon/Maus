@@ -25,7 +25,7 @@ public class PaymentController(GetDepositService getDepositService) : Controller
             TransactionNo = request.TransactionNo,
             ProviderCode = request.ProviderCode,
             MethodCode = request.MethodCode,
-            BankCode = request.BankCode,
+            SubMethodCode = request.SubMethodCode,
             RequestAmount = request.RequestAmount,
             CreatedDate = DateTimeOffset.Now
         });
