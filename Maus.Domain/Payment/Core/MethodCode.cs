@@ -6,7 +6,7 @@ public enum MethodCode
     BankTransfer,
     Barcode,
     CreditCard,
-    EWallet,
+    QrCode,
     InternetBanking,
     Kiosk,
     PayLater,
