@@ -41,7 +41,7 @@ public class PaymentDao : IPaymentDao
                 new ProviderConfig
                 {
                     ProviderCode = ProviderCode.EcPay,
-                    MethodCode = MethodCode.QrCode,
+                    MethodCode = MethodCode.EWallet,
                     SubMethodCode = SubMethodCode.ApplePay,
                     ProviderMethodCode = "ApplePay",
                     ProviderBankCode = null,
@@ -79,7 +79,7 @@ public class PaymentDao : IPaymentDao
                 ]).Select(x => new ProviderConfig
                 {
                     ProviderCode = ProviderCode.EcPay,
-                    MethodCode = MethodCode.Kiosk,
+                    MethodCode = MethodCode.CvsKiosk,
                     SubMethodCode = x.key,
                     ProviderMethodCode = "CVS",
                     ProviderBankCode = x.value,
@@ -120,7 +120,7 @@ public class PaymentDao : IPaymentDao
                 new ProviderConfig
                 {
                     ProviderCode = ProviderCode.EcPay,
-                    MethodCode = MethodCode.QrCode,
+                    MethodCode = MethodCode.EWallet,
                     SubMethodCode = SubMethodCode.TWQR,
                     ProviderMethodCode = "TWQR",
                     ProviderBankCode = null,
