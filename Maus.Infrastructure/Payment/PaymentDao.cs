@@ -120,7 +120,7 @@ public class PaymentDao : IPaymentDao
                 new ProviderConfig
                 {
                     ProviderCode = ProviderCode.EcPay,
-                    MethodCode = MethodCode.EWallet,
+                    MethodCode = MethodCode.QrCode,
                     SubMethodCode = SubMethodCode.TWQR,
                     ProviderMethodCode = "TWQR",
                     ProviderBankCode = null,

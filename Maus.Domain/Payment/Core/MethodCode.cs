@@ -10,4 +10,5 @@ public enum MethodCode
     InternetBanking,
     CvsKiosk,
     PayLater,
+    QrCode,
 }

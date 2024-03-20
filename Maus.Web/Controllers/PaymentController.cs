@@ -29,6 +29,7 @@ public class PaymentController(GetDepositService getDepositService) : Controller
             SubMethodCode = request.SubMethodCode,
             RequestAmount = request.RequestAmount,
             CreatedDate = DateTimeOffset.Now,
+            TransactionNo = null,
         });
 
         return paymentResult.Type switch

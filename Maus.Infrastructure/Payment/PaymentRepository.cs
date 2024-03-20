@@ -26,6 +26,19 @@ public class PaymentRepository(IPaymentDao paymentDao) : IPaymentRepository
 
     public Task<PaymentTransaction> GetTransaction(string transactionNo)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new PaymentTransaction
+        {
+            MerchantCode = "TEST",
+            MerchantTransactionNo = transactionNo,
+            PaymentType = PaymentType.Unspecified,
+            MethodCode = MethodCode.Unspecified,
+            SubMethodCode = SubMethodCode.Unspecified,
+            ProviderCode = ProviderCode.Unspecified,
+            TransactionNo = null,
+            RequestAmount = 0,
+            CreatedDate = default,
+            ItemName = null,
+            Remark = null
+        });
     }
 }

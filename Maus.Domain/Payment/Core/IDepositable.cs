@@ -1,6 +1,6 @@
 ﻿namespace Maus.Domain.Payment.Core;
 
-public interface IDepositService
+public interface IDepositable
 {
     Task<IPaymentResult> Deposit(PaymentTransaction transaction);
 }

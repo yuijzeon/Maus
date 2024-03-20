@@ -1,5 +1,7 @@
 using Maus.Domain.Extensions;
 using Maus.Domain.Payment.Core;
+using Maus.Domain.Payment.EcPay;
+using Maus.Domain.Payment.EcPay.Interfaces;
 
 namespace Maus.Test;
 
@@ -11,11 +13,12 @@ public class Tests
     {
     }
 
-    [TestMethod]
-    public async Task ec_pay_create_order()
+    [DataTestMethod]
+    [DataRow("ABBY", "ab12-3456-7890", "ABBYxAB1234567890")]
+    public void ec_pay_transaction_no(string merchantCode, string merchantTransactionNo, string excepted)
     {
-        "EcPay".ToEnumOrDefault<ProviderCode>().Should().Be(ProviderCode.EcPay);
-        "abc".ParseOrDefault<decimal>().Should().Be(0);
-        "".ParseOrDefault<decimal>().Should().Be(0);
+        var ecPayService = new EcPayService(Substitute.For<IPaymentRepository>(), Substitute.For<IEcPayProxy>());
+        var transactionNo = ecPayService.GetTransactionNo(merchantCode, merchantTransactionNo);
+        transactionNo.Should().Be(excepted);
     }
 }
