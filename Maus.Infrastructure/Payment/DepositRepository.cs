@@ -1,8 +1,9 @@
 ﻿using Maus.Domain.Payment.Core;
+using Maus.Domain.Payment.Deposit;
 
 namespace Maus.Infrastructure.Payment;
 
-public class PaymentRepository(IPaymentDao paymentDao) : IPaymentRepository
+public class DepositRepository(IPaymentDao paymentDao) : IDepositRepository
 {
     public async Task<PaymentChannel> GetPaymentChannel(string merchantCode, PaymentUnit paymentUnit)
     {

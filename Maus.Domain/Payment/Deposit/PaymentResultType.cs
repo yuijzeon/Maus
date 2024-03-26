@@ -1,4 +1,4 @@
-﻿namespace Maus.Domain.Payment.Core;
+﻿namespace Maus.Domain.Payment.Deposit;
 
 public enum PaymentResultType
 {

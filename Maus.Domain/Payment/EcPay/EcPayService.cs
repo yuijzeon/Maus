@@ -1,16 +1,17 @@
 ﻿using System.Text.RegularExpressions;
 using Maus.Domain.Extensions;
 using Maus.Domain.Payment.Core;
+using Maus.Domain.Payment.Deposit;
 using Maus.Domain.Payment.EcPay.Interfaces;
 using Maus.Domain.Payment.EcPay.Models;
 
 namespace Maus.Domain.Payment.EcPay;
 
-public class EcPayService(IPaymentRepository paymentRepository, IEcPayProxy ecPayProxy) : PaymentService, IDepositable
+public class EcPayService(IDepositRepository depositRepository, IEcPayProxy ecPayProxy) : PaymentService, IDepositable
 {
     public async Task<IPaymentResult> Deposit(PaymentTransaction transaction)
     {
-        var channel = await paymentRepository.GetPaymentChannel(transaction.MerchantCode, new PaymentUnit
+        var channel = await depositRepository.GetPaymentChannel(transaction.MerchantCode, new PaymentUnit
         {
             PaymentType = transaction.PaymentType,
             MethodCode = transaction.MethodCode,

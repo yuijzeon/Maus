@@ -1,5 +1,5 @@
-﻿using Maus.Domain.Payment;
-using Maus.Domain.Payment.Core;
+﻿using Maus.Domain.Payment.Core;
+using Maus.Domain.Payment.Deposit;
 using Maus.Domain.Payment.EcPay;
 using Maus.Domain.Payment.EcPay.Interfaces;
 using Maus.Infrastructure.Payment;
@@ -13,7 +13,7 @@ public static class InjectionExtension
     public static IServiceCollection AddPaymentService(this IServiceCollection services)
     {
         services.AddTransient<IPaymentDao, PaymentDao>();
-        services.AddTransient<IPaymentRepository, PaymentRepository>();
+        services.AddTransient<IDepositRepository, DepositRepository>();
 
         services.AddHttpClient<IEcPayProxy, EcPayProxy>();
         services.AddKeyedTransient<IDepositable, EcPayService>(ProviderCode.EcPay);
