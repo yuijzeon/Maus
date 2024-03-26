@@ -1,4 +1,4 @@
-﻿namespace Maus.Domain.Payment;
+﻿namespace Maus.Domain.Payment.Core;
 
 public class PaymentService
 {

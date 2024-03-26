@@ -17,7 +17,7 @@ public class EcPayController(IEcPayProxy ecPayProxy, IPaymentRepository paymentR
         {
             PaymentType = transaction.PaymentType,
             MethodCode = transaction.MethodCode,
-            SubMethodCode = transaction.SubMethodCode,
+            BankCode = transaction.BankCode,
             ProviderCode = transaction.ProviderCode
         });
 

@@ -32,7 +32,7 @@ public class PaymentRepository(IPaymentDao paymentDao) : IPaymentRepository
             MerchantTransactionNo = transactionNo,
             PaymentType = PaymentType.Unspecified,
             MethodCode = MethodCode.Unspecified,
-            SubMethodCode = SubMethodCode.Unspecified,
+            BankCode = BankCode.Unspecified,
             ProviderCode = ProviderCode.Unspecified,
             TransactionNo = null,
             RequestAmount = 0,

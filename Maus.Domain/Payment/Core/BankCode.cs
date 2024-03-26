@@ -1,6 +1,6 @@
 ﻿namespace Maus.Domain.Payment.Core;
 
-public enum SubMethodCode
+public enum BankCode
 {
     Unspecified = 0,
     ApplePay,

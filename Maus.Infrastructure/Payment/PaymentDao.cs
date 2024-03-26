@@ -1,10 +1,11 @@
 ﻿using Maus.Domain.Payment.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace Maus.Infrastructure.Payment;
 
 public class PaymentDao : IPaymentDao
 {
-    public Task<ProviderConfig> GetProviderConfig(PaymentUnit paymentUnit)
+    public async Task<ProviderConfig> GetProviderConfig(PaymentUnit paymentUnit)
     {
         var ecPayUrlConfig = new UrlConfig
         {
@@ -13,27 +14,27 @@ public class PaymentDao : IPaymentDao
             QueryUrl = "https://payment-stage.ecpay.com.tw/Cashier/QueryTradeInfo/V5"
         };
 
-        var providerConfig = ((List<ProviderConfig>)
+        var providerConfig = await ((List<ProviderConfig>)
             [
                 new ProviderConfig
                 {
                     ProviderCode = ProviderCode.EcPay,
                     MethodCode = MethodCode.Unspecified,
-                    SubMethodCode = SubMethodCode.Unspecified,
+                    BankCode = BankCode.Unspecified,
                     ProviderMethodCode = "ALL",
                     ProviderBankCode = null,
                     UrlConfig = ecPayUrlConfig
                 },
-                ..((List<(SubMethodCode key, string value)>)
+                ..((List<(BankCode key, string value)>)
                 [
-                    (SubMethodCode.Unspecified, "0"),
-                    (SubMethodCode.UnionPay, "1"),
-                    (SubMethodCode.UnionPayWithout, "2")
+                    (BankCode.Unspecified, "0"),
+                    (BankCode.UnionPay, "1"),
+                    (BankCode.UnionPayWithout, "2")
                 ]).Select(x => new ProviderConfig
                 {
                     ProviderCode = ProviderCode.EcPay,
                     MethodCode = MethodCode.CreditCard,
-                    SubMethodCode = x.key,
+                    BankCode = x.key,
                     ProviderMethodCode = "Credit",
                     ProviderBankCode = x.value,
                     UrlConfig = ecPayUrlConfig
@@ -42,45 +43,45 @@ public class PaymentDao : IPaymentDao
                 {
                     ProviderCode = ProviderCode.EcPay,
                     MethodCode = MethodCode.EWallet,
-                    SubMethodCode = SubMethodCode.ApplePay,
+                    BankCode = BankCode.ApplePay,
                     ProviderMethodCode = "ApplePay",
                     ProviderBankCode = null,
                     UrlConfig = ecPayUrlConfig
                 },
-                ..((List<(SubMethodCode key, string value)>)
+                ..((List<(BankCode key, string value)>)
                 [
-                    (SubMethodCode.Unspecified, null),
-                    (SubMethodCode.TSIB, "TAISHIN"),
-                    (SubMethodCode.ESUN, "ESUN"),
-                    (SubMethodCode.BKTW, "BOT"),
-                    (SubMethodCode.TPBK, "FUBON"),
-                    (SubMethodCode.CTCB, "CHINATRUST"),
-                    (SubMethodCode.FCBK, "FIRST"),
-                    (SubMethodCode.LBOT, "LAND"),
-                    (SubMethodCode.UWCB, "CATHAY"),
-                    (SubMethodCode.OURB, "TACHONG"),
-                    (SubMethodCode.BBBK, "PANHSIN")
+                    (BankCode.Unspecified, null),
+                    (BankCode.TSIB, "TAISHIN"),
+                    (BankCode.ESUN, "ESUN"),
+                    (BankCode.BKTW, "BOT"),
+                    (BankCode.TPBK, "FUBON"),
+                    (BankCode.CTCB, "CHINATRUST"),
+                    (BankCode.FCBK, "FIRST"),
+                    (BankCode.LBOT, "LAND"),
+                    (BankCode.UWCB, "CATHAY"),
+                    (BankCode.OURB, "TACHONG"),
+                    (BankCode.BBBK, "PANHSIN")
                 ]).Select(x => new ProviderConfig
                 {
                     ProviderCode = ProviderCode.EcPay,
                     MethodCode = MethodCode.BankTransfer,
-                    SubMethodCode = x.key,
+                    BankCode = x.key,
                     ProviderMethodCode = "ATM",
                     ProviderBankCode = x.value,
                     UrlConfig = ecPayUrlConfig
                 }).ToList(),
-                ..((List<(SubMethodCode key, string value)>)
+                ..((List<(BankCode key, string value)>)
                 [
-                    (SubMethodCode.Unspecified, "CVS"),
-                    (SubMethodCode.OkMart, "OK"),
-                    (SubMethodCode.FamilyMart, "FAMILY"),
-                    (SubMethodCode.HiLife, "HILIFE"),
-                    (SubMethodCode.Ibon, "IBON")
+                    (BankCode.Unspecified, "CVS"),
+                    (BankCode.OkMart, "OK"),
+                    (BankCode.FamilyMart, "FAMILY"),
+                    (BankCode.HiLife, "HILIFE"),
+                    (BankCode.Ibon, "IBON")
                 ]).Select(x => new ProviderConfig
                 {
                     ProviderCode = ProviderCode.EcPay,
                     MethodCode = MethodCode.CvsKiosk,
-                    SubMethodCode = x.key,
+                    BankCode = x.key,
                     ProviderMethodCode = "CVS",
                     ProviderBankCode = x.value,
                     UrlConfig = ecPayUrlConfig
@@ -89,30 +90,30 @@ public class PaymentDao : IPaymentDao
                 {
                     ProviderCode = ProviderCode.EcPay,
                     MethodCode = MethodCode.Barcode,
-                    SubMethodCode = SubMethodCode.Unspecified,
+                    BankCode = BankCode.Unspecified,
                     ProviderMethodCode = "BARCODE",
                     ProviderBankCode = "BARCODE",
                     UrlConfig = ecPayUrlConfig
                 },
-                ..((List<(SubMethodCode key, string value)>)
+                ..((List<(BankCode key, string value)>)
                 [
-                    (SubMethodCode.Unspecified, null),
-                    (SubMethodCode.TSIB, "TAISHIN"),
-                    (SubMethodCode.ESUN, "ESUN"),
-                    (SubMethodCode.BKTW, "BOT"),
-                    (SubMethodCode.TPBK, "FUBON"),
-                    (SubMethodCode.CTCB, "CHINATRUST"),
-                    (SubMethodCode.FCBK, "FIRST"),
-                    (SubMethodCode.UWCB, "CATHAY"),
-                    (SubMethodCode.ICBC, "MEGA"),
-                    (SubMethodCode.LBOT, "LAND"),
-                    (SubMethodCode.OURB, "TACHONG"),
-                    (SubMethodCode.SINO, "SINOPAC")
+                    (BankCode.Unspecified, null),
+                    (BankCode.TSIB, "TAISHIN"),
+                    (BankCode.ESUN, "ESUN"),
+                    (BankCode.BKTW, "BOT"),
+                    (BankCode.TPBK, "FUBON"),
+                    (BankCode.CTCB, "CHINATRUST"),
+                    (BankCode.FCBK, "FIRST"),
+                    (BankCode.UWCB, "CATHAY"),
+                    (BankCode.ICBC, "MEGA"),
+                    (BankCode.LBOT, "LAND"),
+                    (BankCode.OURB, "TACHONG"),
+                    (BankCode.SINO, "SINOPAC")
                 ]).Select(x => new ProviderConfig
                 {
                     ProviderCode = ProviderCode.EcPay,
                     MethodCode = MethodCode.InternetBanking,
-                    SubMethodCode = x.key,
+                    BankCode = x.key,
                     ProviderMethodCode = "WebATM",
                     ProviderBankCode = x.value,
                     UrlConfig = ecPayUrlConfig
@@ -121,7 +122,7 @@ public class PaymentDao : IPaymentDao
                 {
                     ProviderCode = ProviderCode.EcPay,
                     MethodCode = MethodCode.QrCode,
-                    SubMethodCode = SubMethodCode.TWQR,
+                    BankCode = BankCode.TWQR,
                     ProviderMethodCode = "TWQR",
                     ProviderBankCode = null,
                     UrlConfig = ecPayUrlConfig
@@ -130,23 +131,24 @@ public class PaymentDao : IPaymentDao
                 {
                     ProviderCode = ProviderCode.EcPay,
                     MethodCode = MethodCode.PayLater,
-                    SubMethodCode = SubMethodCode.Unspecified,
+                    BankCode = BankCode.Unspecified,
                     ProviderMethodCode = "BNPL",
                     ProviderBankCode = null,
-                    UrlConfig = ecPayUrlConfig
+                    UrlConfig = ecPayUrlConfig,
                 }
             ])
+            .AsQueryable()
             .Where(x => x.ProviderCode == paymentUnit.ProviderCode)
             .Where(x => x.MethodCode == paymentUnit.MethodCode)
-            .Where(x => x.SubMethodCode == paymentUnit.SubMethodCode)
-            .Single();
+            .Where(x => x.BankCode == paymentUnit.BankCode)
+            .SingleAsync();
 
-        return Task.FromResult(providerConfig);
+        return providerConfig;
     }
 
-    public Task<MerchantProviderConfig> GetMerchantConfig(string merchantCode, ProviderCode providerCode)
+    public async Task<MerchantProviderConfig> GetMerchantConfig(string merchantCode, ProviderCode providerCode)
     {
-        var merchantConfig = ((List<MerchantProviderConfig>)
+        var merchantConfig = await ((List<MerchantProviderConfig>)
             [
                 new MerchantProviderConfig
                 {
@@ -157,10 +159,11 @@ public class PaymentDao : IPaymentDao
                     ProviderMerchantIv = "EkRm7iFT261dpevs"
                 }
             ])
+            .AsQueryable()
             .Where(x => x.MerchantCode == merchantCode)
             .Where(x => x.ProviderCode == providerCode)
-            .Single();
+            .SingleAsync();
 
-        return Task.FromResult(merchantConfig);
+        return merchantConfig;
     }
 }
