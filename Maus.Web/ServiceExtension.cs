@@ -8,7 +8,7 @@ namespace Maus.Web;
 
 public delegate IDepositable GetDepositService(ProviderCode serviceProviderCode);
 
-public static class InjectionExtension
+public static class ServiceExtension
 {
     public static IServiceCollection AddPaymentService(this IServiceCollection services)
     {
