@@ -1,6 +1,6 @@
 ﻿namespace Maus.Domain.Payment.Core;
 
-public class MerchantProviderConfig
+public class MerchantConfig
 {
     public required string MerchantCode { get; set; }
     public ProviderCode ProviderCode { get; set; }

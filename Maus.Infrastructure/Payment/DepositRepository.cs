@@ -35,7 +35,7 @@ public class DepositRepository(IPaymentDao paymentDao) : IDepositRepository
             MethodCode = MethodCode.Unspecified,
             BankCode = BankCode.Unspecified,
             ProviderCode = ProviderCode.Unspecified,
-            TransactionNo = null,
+            TransactionNo = string.Empty,
             RequestAmount = 0,
             CreatedDate = default,
             ItemName = null,

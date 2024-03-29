@@ -76,7 +76,7 @@ public class PaymentDao : IPaymentDao
                     (BankCode.OkMart, "OK"),
                     (BankCode.FamilyMart, "FAMILY"),
                     (BankCode.HiLife, "HILIFE"),
-                    (BankCode.Ibon, "IBON")
+                    (BankCode.IBon, "IBON")
                 ]).Select(x => new ProviderConfig
                 {
                     ProviderCode = ProviderCode.EcPay,
@@ -146,11 +146,11 @@ public class PaymentDao : IPaymentDao
         return providerConfig;
     }
 
-    public async Task<MerchantProviderConfig> GetMerchantConfig(string merchantCode, ProviderCode providerCode)
+    public async Task<MerchantConfig> GetMerchantConfig(string merchantCode, ProviderCode providerCode)
     {
-        var merchantConfig = await ((List<MerchantProviderConfig>)
+        var merchantConfig = await ((List<MerchantConfig>)
             [
-                new MerchantProviderConfig
+                new MerchantConfig
                 {
                     MerchantCode = merchantCode,
                     ProviderCode = ProviderCode.EcPay,

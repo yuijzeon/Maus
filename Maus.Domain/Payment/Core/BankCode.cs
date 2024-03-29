@@ -11,7 +11,7 @@ public enum BankCode
     FamilyMart,
     FCBK,
     HiLife,
-    Ibon,
+    IBon,
     ICBC,
     LBOT,
     OkMart,
