@@ -5,11 +5,13 @@ VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maus.Web", "Maus.Web\Maus.Web.csproj", "{582DE473-3B10-4608-B1CE-07C464D18E05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maus.Test", "Maus.Test\Maus.Test.csproj", "{15B9D3C0-F92E-4672-A377-234CEC973163}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maus.Test", "Maus.Test\Maus.Test.csproj", "{15B9D3C0-F92E-4672-A377-234CEC973163}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maus.Domain", "Maus.Domain\Maus.Domain.csproj", "{B316F94F-3397-44A5-BC29-D364815F560B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maus.Domain", "Maus.Domain\Maus.Domain.csproj", "{B316F94F-3397-44A5-BC29-D364815F560B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maus.Infrastructure", "Maus.Infrastructure\Maus.Infrastructure.csproj", "{EEE4CEFA-E6D7-4067-83D8-2718F0676203}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maus.Infrastructure", "Maus.Infrastructure\Maus.Infrastructure.csproj", "{EEE4CEFA-E6D7-4067-83D8-2718F0676203}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "maus.client", "Maus.Client\maus.client.esproj", "{5D3CB326-AB59-4EC6-BC9E-55707A1B3D19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,12 @@ Global
 		{EEE4CEFA-E6D7-4067-83D8-2718F0676203}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEE4CEFA-E6D7-4067-83D8-2718F0676203}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEE4CEFA-E6D7-4067-83D8-2718F0676203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D3CB326-AB59-4EC6-BC9E-55707A1B3D19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D3CB326-AB59-4EC6-BC9E-55707A1B3D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D3CB326-AB59-4EC6-BC9E-55707A1B3D19}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{5D3CB326-AB59-4EC6-BC9E-55707A1B3D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D3CB326-AB59-4EC6-BC9E-55707A1B3D19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D3CB326-AB59-4EC6-BC9E-55707A1B3D19}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
