@@ -44,6 +44,6 @@ public class PaymentContext(DbContextOptions<PaymentContext> options) : DbContex
 
     private static Expression<Func<T, object?>> GetPaymentUnitKey<T>() where T : PaymentUnitBase<int>
     {
-        return x => new { x.Type, x.CurrencyCode, x.MethodCode, x.ProviderCode };
+        return x => new { x.Type, CurrencyCode = x.Currency, x.MethodCode, x.ProviderCode };
     }
 }

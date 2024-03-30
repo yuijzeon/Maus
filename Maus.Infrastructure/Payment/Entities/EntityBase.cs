@@ -7,7 +7,7 @@ namespace Maus.Infrastructure.Payment.Entities;
 public class EntityBase<TId> where TId : INumber<TId>
 {
     [Key]
-    [Column("Id")]
+    [Column("Id", Order = 0)]
     public TId Id { get; set; } = default!;
 
     [Column("CreatedAt")]

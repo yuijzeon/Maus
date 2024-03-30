@@ -12,6 +12,7 @@ public class ProviderMethodEntity : PaymentUnitBase<int>
     public string? ProviderMethodCode { get; set; }
 
     [Column("Status")]
+    [ConvertString(false, 15)]
     public PaymentStatus Status { get; set; }
 
     public ProviderEntity ProviderEntity { internal get; set; } = null!;
