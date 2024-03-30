@@ -1,23 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Maus.Domain.Payment.Core;
 
 namespace Maus.Infrastructure.Payment.Entities;
 
-public class ProviderMethodEntity : IBaseEntity<int>, IPaymentUnit
+[Table("ProviderMethod")]
+public class ProviderMethodEntity : PaymentUnitBase<int>
 {
+    [Column("ProviderMethodCode")]
     [StringLength(15)]
     public string? ProviderMethodCode { get; set; }
 
+    [Column("Status")]
     public PaymentStatus Status { get; set; }
 
-    public ProviderEntity Provider { internal get; set; } = null!;
+    public ProviderEntity ProviderEntity { internal get; set; } = null!;
     public ICollection<ProviderMethodBankEntity>? ProviderMethodBanks { get; set; }
-
-    public int Id { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    public bool IsDeleted { get; set; }
-    public PaymentType Type { get; set; }
-    public CurrencyCode CurrencyCode { get; set; }
-    public MethodCode MethodCode { get; set; }
-    public ProviderCode ProviderCode { get; set; }
 }

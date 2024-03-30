@@ -11,9 +11,9 @@ namespace Maus.Web.Controllers;
 public class PaymentPrepareEcPayController(PaymentContext context) : PreparePaymentController(context)
 {
     [HttpPost]
-    public async Task<IActionResult> PrepareEcPayDepositData()
+    public async Task<IActionResult> PrepareEcPayDepositData(string operatorName)
     {
-        SetParameters(PaymentType.Deposit, CurrencyCode.TWD, ProviderCode.EcPay);
+        SetParameters(PaymentType.Deposit, CurrencyCode.TWD, ProviderCode.EcPay, operatorName);
 
         await PrepareProvider();
 
@@ -74,6 +74,7 @@ public class PreparePaymentController : ControllerBase
     private CurrencyCode? _currencyCode;
     private PaymentType? _paymentType;
     private ProviderCode? _providerCode;
+    private string _operatorName;
 
     public PreparePaymentController(PaymentContext context)
     {
@@ -93,6 +94,7 @@ public class PreparePaymentController : ControllerBase
             {
                 ProviderCode = _providerCode!.Value,
                 Status = PaymentStatus.Closed,
+                CreatedBy = _operatorName,
             });
 
             await _context.SaveChangesAsync();
@@ -116,6 +118,7 @@ public class PreparePaymentController : ControllerBase
                 CurrencyCode = _currencyCode!.Value,
                 MethodCode = methodCode,
                 ProviderCode = _providerCode!.Value,
+                CreatedBy = _operatorName,
             });
 
             await _context.SaveChangesAsync();
@@ -141,16 +144,18 @@ public class PreparePaymentController : ControllerBase
                 CurrencyCode = _currencyCode!.Value,
                 MethodCode = methodCode,
                 ProviderCode = _providerCode!.Value,
+                CreatedBy = _operatorName,
             });
 
             await _context.SaveChangesAsync();
         }
     }
 
-    protected void SetParameters(PaymentType paymentType, CurrencyCode currencyCode, ProviderCode providerCode)
+    protected void SetParameters(PaymentType paymentType, CurrencyCode currencyCode, ProviderCode providerCode, string operatorName)
     {
         _currencyCode = currencyCode;
         _providerCode = providerCode;
         _paymentType = paymentType;
+        _operatorName = operatorName;
     }
 }
