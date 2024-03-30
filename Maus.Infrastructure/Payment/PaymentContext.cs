@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Maus.Infrastructure.Payment.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Maus.Infrastructure.Payment;
 
@@ -10,14 +12,19 @@ public class PaymentContext(DbContextOptions<PaymentContext> options) : DbContex
     public DbSet<ProviderMethodEntity> ProviderMethods { get; set; } = null!;
     public DbSet<ProviderMethodBankEntity> ProviderMethodBanks { get; set; } = null!;
 
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        base.ConfigureConventions(configurationBuilder);
+
+        configurationBuilder.Conventions.Add(x => new DefaultValueSqlConvention(x.GetRequiredService<ProviderConventionSetBuilderDependencies>()));
+        configurationBuilder.Conventions.Add(x => new ConvertStringConvention(x.GetRequiredService<ProviderConventionSetBuilderDependencies>()));
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseConvertStringAttribute();
-
         modelBuilder.Entity<ProviderEntity>(entity =>
         {
             entity.HasAlternateKey(x => x.ProviderCode);
-            entity.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
 
             entity.HasMany(x => x.ProviderMethods)
                 .WithOne(x => x.ProviderEntity)
@@ -28,17 +35,11 @@ public class PaymentContext(DbContextOptions<PaymentContext> options) : DbContex
         modelBuilder.Entity<ProviderMethodEntity>(entity =>
         {
             entity.HasAlternateKey(GetPaymentUnitKey<ProviderMethodEntity>());
-            entity.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
 
             entity.HasMany(x => x.ProviderMethodBanks)
                 .WithOne(x => x.ProviderMethod)
                 .HasPrincipalKey(GetPaymentUnitKey<ProviderMethodEntity>())
                 .HasForeignKey(GetPaymentUnitKey<ProviderMethodBankEntity>());
-        });
-
-        modelBuilder.Entity<ProviderMethodBankEntity>(entity =>
-        {
-            entity.Property(x => x.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
         });
     }
 

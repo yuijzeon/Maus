@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Numerics;
+using Microsoft.EntityFrameworkCore;
 
 namespace Maus.Infrastructure.Payment.Entities;
 
@@ -11,6 +12,8 @@ public class EntityBase<TId> where TId : INumber<TId>
     public TId Id { get; set; } = default!;
 
     [Column("CreatedAt")]
+    [Precision(2)]
+    [DefaultValueSql("GETUTCDATE()")]
     public DateTime CreatedAt { get; set; }
 
     [Column("CreatedBy")]
@@ -18,6 +21,7 @@ public class EntityBase<TId> where TId : INumber<TId>
     public string CreatedBy { get; set; } = null!;
 
     [Column("UpdatedAt")]
+    [Precision(2)]
     public DateTime? UpdatedAt { get; set; }
 
     [Column("UpdatedBy")]
