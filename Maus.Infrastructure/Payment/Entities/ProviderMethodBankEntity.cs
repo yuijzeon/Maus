@@ -8,7 +8,6 @@ namespace Maus.Infrastructure.Payment.Entities;
 public class ProviderMethodBankEntity : PaymentUnitBase<int>
 {
     [Column("BankCode")]
-    [ConvertString(false, 15)]
     public BankCode BankCode { get; set; }
 
     [Column("ProviderBankCode")]
@@ -16,7 +15,6 @@ public class ProviderMethodBankEntity : PaymentUnitBase<int>
     public string? ProviderBankCode { get; set; }
 
     [Column("Status")]
-    [ConvertString(false, 15)]
     public PaymentStatus Status { get; set; }
 
     public ProviderMethodEntity ProviderMethod { internal get; set; } = null!;

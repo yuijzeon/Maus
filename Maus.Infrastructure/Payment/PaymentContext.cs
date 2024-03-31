@@ -1,8 +1,7 @@
 ﻿using System.Linq.Expressions;
+using Maus.Domain.Payment.Core;
 using Maus.Infrastructure.Payment.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Maus.Infrastructure.Payment;
 
@@ -16,8 +15,15 @@ public class PaymentContext(DbContextOptions<PaymentContext> options) : DbContex
     {
         base.ConfigureConventions(configurationBuilder);
 
-        configurationBuilder.Conventions.Add(x => new DefaultValueSqlConvention(x.GetRequiredService<ProviderConventionSetBuilderDependencies>()));
-        configurationBuilder.Conventions.Add(x => new ConvertStringConvention(x.GetRequiredService<ProviderConventionSetBuilderDependencies>()));
+        configurationBuilder.Conventions.Add(dependencies => new DefaultValueSqlConvention(dependencies));
+
+        configurationBuilder.Properties<DateTime>().HaveConversion<DateTimeKindConvention>().HavePrecision(0);
+        configurationBuilder.Properties<PaymentType>().HaveConversion(typeof(string)).AreUnicode(false).HaveMaxLength(15);
+        configurationBuilder.Properties<CurrencyCode>().HaveConversion(typeof(string)).AreUnicode(false).HaveMaxLength(15);
+        configurationBuilder.Properties<MethodCode>().HaveConversion(typeof(string)).AreUnicode(false).HaveMaxLength(15);
+        configurationBuilder.Properties<BankCode>().HaveConversion(typeof(string)).AreUnicode(false).HaveMaxLength(15);
+        configurationBuilder.Properties<ProviderCode>().HaveConversion(typeof(string)).AreUnicode(false).HaveMaxLength(15);
+        configurationBuilder.Properties<PaymentStatus>().HaveConversion(typeof(string)).AreUnicode(false).HaveMaxLength(15);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,6 +51,6 @@ public class PaymentContext(DbContextOptions<PaymentContext> options) : DbContex
 
     private static Expression<Func<T, object?>> GetPaymentUnitKey<T>() where T : PaymentUnitBase<int>
     {
-        return x => new { x.Type, CurrencyCode = x.Currency, x.MethodCode, x.ProviderCode };
+        return x => new { x.Type, x.Currency, x.MethodCode, x.ProviderCode };
     }
 }
