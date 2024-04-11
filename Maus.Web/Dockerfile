@@ -9,10 +9,9 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Maus.Web/Maus.Web.csproj", "Maus.Web/"]
-RUN dotnet restore "./Maus.Web/./Maus.Web.csproj"
+COPY ["./Maus.Web.csproj", "./"]
+RUN dotnet restore "./Maus.Web.csproj"
 COPY . .
-WORKDIR "/src/Maus.Web"
 RUN dotnet build "./Maus.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
